@@ -7,19 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EF53F9FA2ABCD1430028352E /* SSHTunnelingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF53F9F92ABCD1430028352E /* SSHTunnelingApp.swift */; };
+		EF2E791B2AC2D8E90084B2DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2E791A2AC2D8E90084B2DA /* AppDelegate.swift */; };
+		EF53F9FA2ABCD1430028352E /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF53F9F92ABCD1430028352E /* App.swift */; };
 		EF53F9FC2ABCD1430028352E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF53F9FB2ABCD1430028352E /* ContentView.swift */; };
 		EF53F9FE2ABCD1440028352E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF53F9FD2ABCD1440028352E /* Assets.xcassets */; };
 		EF53FA012ABCD1440028352E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF53FA002ABCD1440028352E /* Preview Assets.xcassets */; };
+		EF53FA0B2ABCD2100028352E /* ShellService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF53FA0A2ABCD2100028352E /* ShellService.swift */; };
+		EF7ED6272AC0587600A1FBAB /* SSHTunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7ED6262AC0587600A1FBAB /* SSHTunnel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EF2E791A2AC2D8E90084B2DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF53F9F62ABCD1430028352E /* SSHTunneling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SSHTunneling.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		EF53F9F92ABCD1430028352E /* SSHTunnelingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTunnelingApp.swift; sourceTree = "<group>"; };
+		EF53F9F92ABCD1430028352E /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		EF53F9FB2ABCD1430028352E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		EF53F9FD2ABCD1440028352E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EF53FA002ABCD1440028352E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		EF53FA022ABCD1440028352E /* SSHTunneling.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SSHTunneling.entitlements; sourceTree = "<group>"; };
+		EF53FA0A2ABCD2100028352E /* ShellService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellService.swift; sourceTree = "<group>"; };
+		EF7ED6262AC0587600A1FBAB /* SSHTunnel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTunnel.swift; sourceTree = "<group>"; };
+		EF7ED62A2AC0651300A1FBAB /* SSHTunneling.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SSHTunneling.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +43,7 @@
 		EF53F9ED2ABCD1430028352E = {
 			isa = PBXGroup;
 			children = (
+				EF7ED62A2AC0651300A1FBAB /* SSHTunneling.entitlements */,
 				EF53F9F82ABCD1430028352E /* SSHTunneling */,
 				EF53F9F72ABCD1430028352E /* Products */,
 			);
@@ -52,11 +60,13 @@
 		EF53F9F82ABCD1430028352E /* SSHTunneling */ = {
 			isa = PBXGroup;
 			children = (
-				EF53F9F92ABCD1430028352E /* SSHTunnelingApp.swift */,
+				EF53FA082ABCD1D30028352E /* services */,
+				EF53F9F92ABCD1430028352E /* App.swift */,
 				EF53F9FB2ABCD1430028352E /* ContentView.swift */,
 				EF53F9FD2ABCD1440028352E /* Assets.xcassets */,
 				EF53FA022ABCD1440028352E /* SSHTunneling.entitlements */,
 				EF53F9FF2ABCD1440028352E /* Preview Content */,
+				EF2E791A2AC2D8E90084B2DA /* AppDelegate.swift */,
 			);
 			path = SSHTunneling;
 			sourceTree = "<group>";
@@ -67,6 +77,23 @@
 				EF53FA002ABCD1440028352E /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		EF53FA082ABCD1D30028352E /* services */ = {
+			isa = PBXGroup;
+			children = (
+				EF53FA092ABCD1E70028352E /* shell */,
+			);
+			path = services;
+			sourceTree = "<group>";
+		};
+		EF53FA092ABCD1E70028352E /* shell */ = {
+			isa = PBXGroup;
+			children = (
+				EF53FA0A2ABCD2100028352E /* ShellService.swift */,
+				EF7ED6262AC0587600A1FBAB /* SSHTunnel.swift */,
+			);
+			path = shell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,7 +167,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF53F9FC2ABCD1430028352E /* ContentView.swift in Sources */,
-				EF53F9FA2ABCD1430028352E /* SSHTunnelingApp.swift in Sources */,
+				EF53F9FA2ABCD1430028352E /* App.swift in Sources */,
+				EF7ED6272AC0587600A1FBAB /* SSHTunnel.swift in Sources */,
+				EF2E791B2AC2D8E90084B2DA /* AppDelegate.swift in Sources */,
+				EF53FA0B2ABCD2100028352E /* ShellService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,10 +296,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SSHTunneling/SSHTunneling.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SSHTunneling/Preview Content\"";
+				DEVELOPMENT_TEAM = 8Y746A2BHG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -291,10 +323,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SSHTunneling/SSHTunneling.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SSHTunneling/Preview Content\"";
+				DEVELOPMENT_TEAM = 8Y746A2BHG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";

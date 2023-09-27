@@ -8,19 +8,44 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var exitCode: Int32 = 0
+    var SSHTunnels: [SSHTunnel] = []
+    
+    mutating func createTunnels() {
+        let tunnel = SSHTunnel(name: "BETA", username: "***REMOVED***", serverIP: "***REMOVED***", to: "127.0.0.1", localPort: 27018, distantPort: 27017)
+        self.SSHTunnels.append(tunnel)
+    }
+    
+    func run() {
+        for tunnel in self.SSHTunnels {
+            DispatchQueue.global(qos: .background).async {
+                tunnel.connect()
+                self.exitCode = ShellService.tasks.first(where: {$0.id == tunnel.taskId})!.exitCode
+            }
+        }
+    }
+    
+    init() {
+        self.createTunnels()
+    }
+    
     var body: some View {
         VStack {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Text(String(exitCode))
         }
         .padding()
+        .task {
+            //self.run()
+        }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+/**struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
-}
+}**/
