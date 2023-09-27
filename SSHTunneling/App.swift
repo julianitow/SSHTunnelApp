@@ -26,26 +26,12 @@ struct SSHTunnelingApp: App {
             self.contentView
                 .onAppear {
                     self.appDelegate.SSHTunnels = self.contentView.SSHTunnels
-                    print(self.contentView.SSHTunnels.count)
                 }
         }
         MenuBarExtra("SSH Tunneling", systemImage: "rectangle.connected.to.line.below") {
-            VStack {
-                ForEach(self.contentView.SSHTunnels, id: \.self.taskId) { tunnel in
-                    Button(tunnel.name) {
-                        if !tunnel.isConnected {
-                            tunnel.connect()
-                            return
-                        }
-                        tunnel.disconnect()
-                    }
-                }
-            }
-            Button("Quit")
-            {
-                NSApplication.shared.terminate(nil)
-            }
+            AppMenu(tunnels: self.contentView.SSHTunnels)
         }
+        .menuBarExtraStyle(.menu)
         .onChange(of: scenePhase) { phase in
             if phase == .background {
                 // REMOVE ICON FROM DOCK

@@ -13,8 +13,10 @@ struct ContentView: View {
     var SSHTunnels: [SSHTunnel] = []
     
     mutating func createTunnels() {
-        let tunnel = SSHTunnel(name: "BETA", username: "***REMOVED***", serverIP: "***REMOVED***", to: "127.0.0.1", localPort: 27018, distantPort: 27017)
-        self.SSHTunnels.append(tunnel)
+        let tunnelBeta = SSHTunnel(name: "BETA", username: "***REMOVED***", serverIP: "***REMOVED***", to: "127.0.0.1", localPort: 27018, distantPort: 27017)
+        let tunnelProd = SSHTunnel(name: "PROD-1", username: "***REMOVED***", serverIP: "***REMOVED***", to: "127.0.0.1", localPort: 27019, distantPort: 27017)
+        self.SSHTunnels.append(tunnelBeta)
+        self.SSHTunnels.append(tunnelProd)
     }
     
     func run() {

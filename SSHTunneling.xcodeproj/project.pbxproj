@@ -14,6 +14,9 @@
 		EF53FA012ABCD1440028352E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF53FA002ABCD1440028352E /* Preview Assets.xcassets */; };
 		EF53FA0B2ABCD2100028352E /* ShellService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF53FA0A2ABCD2100028352E /* ShellService.swift */; };
 		EF7ED6272AC0587600A1FBAB /* SSHTunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7ED6262AC0587600A1FBAB /* SSHTunnel.swift */; };
+		EFC17CA02AC495220072A58F /* SSHTunnelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC17C9F2AC495220072A58F /* SSHTunnelError.swift */; };
+		EFC17CA32AC495400072A58F /* SSHTunnelErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC17CA22AC495400072A58F /* SSHTunnelErrorExtension.swift */; };
+		EFC17CA72AC49CAF0072A58F /* AppMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC17CA62AC49CAF0072A58F /* AppMenu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +30,9 @@
 		EF53FA0A2ABCD2100028352E /* ShellService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellService.swift; sourceTree = "<group>"; };
 		EF7ED6262AC0587600A1FBAB /* SSHTunnel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTunnel.swift; sourceTree = "<group>"; };
 		EF7ED62A2AC0651300A1FBAB /* SSHTunneling.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SSHTunneling.entitlements; sourceTree = "<group>"; };
+		EFC17C9F2AC495220072A58F /* SSHTunnelError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTunnelError.swift; sourceTree = "<group>"; };
+		EFC17CA22AC495400072A58F /* SSHTunnelErrorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTunnelErrorExtension.swift; sourceTree = "<group>"; };
+		EFC17CA62AC49CAF0072A58F /* AppMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,13 +66,15 @@
 		EF53F9F82ABCD1430028352E /* SSHTunneling */ = {
 			isa = PBXGroup;
 			children = (
-				EF53FA082ABCD1D30028352E /* services */,
+				EFC17CA52AC495A80072A58F /* Views */,
+				EFC17CA12AC4952F0072A58F /* Extensions */,
+				EFC17C9E2AC495120072A58F /* Enums */,
+				EF53FA082ABCD1D30028352E /* Services */,
 				EF53F9F92ABCD1430028352E /* App.swift */,
-				EF53F9FB2ABCD1430028352E /* ContentView.swift */,
+				EF2E791A2AC2D8E90084B2DA /* AppDelegate.swift */,
 				EF53F9FD2ABCD1440028352E /* Assets.xcassets */,
 				EF53FA022ABCD1440028352E /* SSHTunneling.entitlements */,
 				EF53F9FF2ABCD1440028352E /* Preview Content */,
-				EF2E791A2AC2D8E90084B2DA /* AppDelegate.swift */,
 			);
 			path = SSHTunneling;
 			sourceTree = "<group>";
@@ -79,21 +87,54 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		EF53FA082ABCD1D30028352E /* services */ = {
+		EF53FA082ABCD1D30028352E /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				EFC17CA42AC495820072A58F /* ssh */,
 				EF53FA092ABCD1E70028352E /* shell */,
 			);
-			path = services;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		EF53FA092ABCD1E70028352E /* shell */ = {
 			isa = PBXGroup;
 			children = (
 				EF53FA0A2ABCD2100028352E /* ShellService.swift */,
-				EF7ED6262AC0587600A1FBAB /* SSHTunnel.swift */,
 			);
 			path = shell;
+			sourceTree = "<group>";
+		};
+		EFC17C9E2AC495120072A58F /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				EFC17C9F2AC495220072A58F /* SSHTunnelError.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		EFC17CA12AC4952F0072A58F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EFC17CA22AC495400072A58F /* SSHTunnelErrorExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		EFC17CA42AC495820072A58F /* ssh */ = {
+			isa = PBXGroup;
+			children = (
+				EF7ED6262AC0587600A1FBAB /* SSHTunnel.swift */,
+			);
+			path = ssh;
+			sourceTree = "<group>";
+		};
+		EFC17CA52AC495A80072A58F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EF53F9FB2ABCD1430028352E /* ContentView.swift */,
+				EFC17CA62AC49CAF0072A58F /* AppMenu.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,7 +210,10 @@
 				EF53F9FC2ABCD1430028352E /* ContentView.swift in Sources */,
 				EF53F9FA2ABCD1430028352E /* App.swift in Sources */,
 				EF7ED6272AC0587600A1FBAB /* SSHTunnel.swift in Sources */,
+				EFC17CA32AC495400072A58F /* SSHTunnelErrorExtension.swift in Sources */,
+				EFC17CA02AC495220072A58F /* SSHTunnelError.swift in Sources */,
 				EF2E791B2AC2D8E90084B2DA /* AppDelegate.swift in Sources */,
+				EFC17CA72AC49CAF0072A58F /* AppMenu.swift in Sources */,
 				EF53FA0B2ABCD2100028352E /* ShellService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

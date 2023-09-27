@@ -38,8 +38,9 @@ class SSHTunnel: Equatable {
     func connect(_ linkOutput: Bool? = false) -> Void {
         do {
             if ShellService.isSuspended(id: taskId) {
-                print("TASK SUSPENDED")
-                ShellService.resumeTask(id: taskId)
+                if !ShellService.resumeTask(id: taskId) {
+                    throw SSHTunnelError.ErrorResumingTask
+                }
                 return
             }
             try ShellService.runTask(taskId, linkOutput)

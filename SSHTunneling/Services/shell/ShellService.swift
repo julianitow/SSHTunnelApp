@@ -60,11 +60,11 @@ class ShellService {
         }
         return false
     }
+    
     static func resumeTask(id: UUID) -> Bool {
-        for task in tasks where task.id == id {
-            return task.process.resume()
-        }
-        return false
+        guard let index = tasks.firstIndex(where: {$0.id == id}) else { print("TASK ID NOT FOUND"); return false}
+        tasks[index].isSuspended = false
+        return tasks[index].process.resume()
     }
     
     static func terminationHander(process: Process) -> Void {
@@ -77,9 +77,8 @@ class ShellService {
     }
     
     static func suspendTask(id: UUID) -> Void {
-        guard let index = tasks.firstIndex(where: {$0.id == id}) else { return }
+        guard let index = tasks.firstIndex(where: {$0.id == id}) else { print("TASK ID NOT FOUND"); return }
         tasks[index].isSuspended = tasks[index].process.suspend()
-        print("SUSPEND TASK: ", tasks[index].isSuspended)
     }
     
     static func runAllTasks(_ linkOutput: Bool? = false) throws -> Void {
