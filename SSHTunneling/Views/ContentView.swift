@@ -10,13 +10,30 @@ import SwiftUI
 struct ContentView: View {
     
     @State var exitCode: Int32 = 0
+    @StateObject var viewModel = SSHTunnelViewModel()
+    
     var SSHTunnels: [SSHTunnel] = []
     
     mutating func createTunnels() {
-        let tunnelBeta = SSHTunnel(name: "BETA", username: "***REMOVED***", serverIP: "***REMOVED***", to: "127.0.0.1", localPort: 27018, distantPort: 27017)
-        let tunnelProd = SSHTunnel(name: "PROD-1", username: "***REMOVED***", serverIP: "***REMOVED***", to: "127.0.0.1", localPort: 27019, distantPort: 27017)
-        self.SSHTunnels.append(tunnelBeta)
-        self.SSHTunnels.append(tunnelProd)
+        let tunnelBeta = SSHTunnelConfig(name: "BETA", username: "***REMOVED***", serverIP: "***REMOVED***", to: "127.0.0.1", localPort: 27018, distantPort: 27017)
+        let tunnelProd = SSHTunnelConfig(name: "PROD-1", username: "***REMOVED***", serverIP: "***REMOVED***", to: "127.0.0.1", localPort: 27019, distantPort: 27017)
+        let tunnelProd2 = SSHTunnelConfig(name: "PROD-2", username: "***REMOVED***", serverIP: "***REMOVED***", to: "127.0.0.1", localPort: 27020, distantPort: 27017)
+        let tunnelProd3 = SSHTunnelConfig(name: "PROD-3", username: "***REMOVED***", serverIP: "***REMOVED***", to: "127.0.0.1", localPort: 27021, distantPort: 27017)
+        /*self.SSHTunnels.append(SSHTunnel(config: tunnelBeta))
+        self.SSHTunnels.append(SSHTunnel(config: tunnelProd))
+        self.SSHTunnels.append(SSHTunnel(config: tunnelProd2))
+        self.SSHTunnels.append(SSHTunnel(config: tunnelProd3))*/
+        
+        //StorageService.saveConfig(config: tunnelBeta)
+                
+        do {
+            let configs = try StorageService.getConfigs()
+            for config in configs {
+                self.SSHTunnels.append(SSHTunnel(config: config))
+            }
+        } catch {
+            print("\(error)")
+        }
     }
     
     func run() {
@@ -33,7 +50,18 @@ struct ContentView: View {
     }
     
     var body: some View {
-        VStack {
+        NavigationView {
+            List {
+                ForEach(SSHTunnels, id: \.self.taskId) { tunnel in
+                    NavigationLink(tunnel.config.name, tag: tunnel.taskId, selection: $viewModel.selectedId) {
+                        SSHTunnelDetailsView(tunnel: tunnel)
+                    }
+                }
+            }
+            .listStyle(.sidebar)
+            Text("No selection")
+        }
+        /*VStack {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
@@ -42,6 +70,9 @@ struct ContentView: View {
         .padding()
         .task {
             //self.run()
+        }*/
+        .onAppear() {
+            self.viewModel.tunnels = self.SSHTunnels
         }
     }
 }

@@ -24,4 +24,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             ShellService.tasks[index].process.terminate()
         }
     }
+    
+    func tmp() -> Void {
+        print("HERE")
+    }
 }

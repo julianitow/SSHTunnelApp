@@ -22,7 +22,7 @@ struct SSHTunnelingApp: App {
     
 
     var body: some Scene {
-        WindowGroup {
+        Window("SSHTunneling", id: "main-window") {
             self.contentView
                 .onAppear {
                     self.appDelegate.SSHTunnels = self.contentView.SSHTunnels

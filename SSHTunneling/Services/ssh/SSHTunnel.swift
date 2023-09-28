@@ -9,24 +9,14 @@ import Foundation
 
 //ssh ***REMOVED***@***REMOVED*** -Nf  -L 127.0.0.1:27018:127.0.0.1:27017
 
-class SSHTunnel: Equatable {
+class SSHTunnel: Equatable, ObservableObject {
+    
     public let taskId: UUID
-    public let name: String
+    public var config: SSHTunnelConfig
     
-    private let serverIP: String
-    private let toIP: String
-    private let localPort: Int
-    private let distantPort: Int
-    private let username: String
-    
-    init(name: String, username: String, serverIP: String, to: String, localPort: Int, distantPort: Int) {
-        self.name = name
-        self.serverIP = serverIP
-        self.toIP = to
-        self.localPort = localPort
-        self.distantPort = distantPort
-        self.username = username
-        let cmd = "ssh \(self.username)@\(self.serverIP) -N -L \(self.toIP):\(self.localPort):127.0.0.1:\(self.distantPort)"
+    init(config: SSHTunnelConfig) {
+        self.config = config
+        let cmd = "ssh \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort)"
         print(cmd)
         self.taskId = ShellService.createShellTask(cmd)
     }
