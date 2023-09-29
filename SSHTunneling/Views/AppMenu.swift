@@ -30,7 +30,7 @@ struct AppMenu: View {
             let window = NSApp.windows.firstIndex(where: { $0.title == "SSHTunneling"})
             if window != nil {
                 NSApp.windows.first?.makeKeyAndOrderFront(nil)
-                NSApp.activate()
+                NSApp.activate(ignoringOtherApps: true)
             }
         }
     }

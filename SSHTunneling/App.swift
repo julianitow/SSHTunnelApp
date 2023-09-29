@@ -49,9 +49,6 @@ struct SSHTunnelingApp: App {
         }
         MenuBarExtra("SSH Tunneling", systemImage: "rectangle.connected.to.line.below") {
             AppMenu(tunnels: self.contentView.SSHTunnels)
-                .onChange(of: self.contentView.updated) {
-                    print("here")
-                }
         }
         .menuBarExtraStyle(.menu)
     }
