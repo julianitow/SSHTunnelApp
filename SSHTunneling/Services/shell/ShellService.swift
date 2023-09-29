@@ -87,6 +87,12 @@ class ShellService {
         tasks[index].isSuspended = tasks[index].process.suspend()
     }
     
+    static func stopTask(id: UUID) -> Void {
+        guard let index = tasks.firstIndex(where: {$0.id == id}) else { print("TASK ID NOT FOUND"); return }
+        tasks[index].isSuspended = true
+        tasks[index].process.interrupt()
+    }
+    
     static func runAllTasks(_ linkOutput: Bool? = false) throws -> Void {
         for i in 0...tasks.count - 1 {
             do {

@@ -40,14 +40,6 @@ struct AppMenu: View {
             ForEach(0..<tunnels.count) { i in
                 HStack {
                     Button(tunnels[i].config.name, systemImage: btnIcons[i]) {
-                        if tunnels[i].config.name == "PROD-2" {
-                            if !tunnels[i].isConnected {
-                                if tunnels[i].connect(true, password: "h$zz6Er+QDTw/3gv") {
-                                    btnIcons[i] = "circle.fill"
-                                }
-                                return
-                            }
-                        }
                         if !tunnels[i].isConnected {
                             if tunnels[i].connect() {
                                 btnIcons[i] = "circle.fill"
@@ -71,12 +63,15 @@ struct AppMenu: View {
             NSApplication.shared.terminate(nil)
         }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.updateNotification), perform: { data in
-            print("HERE")
+            self.updated.toggle()
         })
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.processTerminateNotification), perform: { data in
             let id = data.object as? UUID
             guard let index = tunnels.firstIndex(where: { $0.taskId == id }) else { return }
-            btnIcons[index] = "exclamationmark.triangle"
+            guard let task = ShellService.tasks.first(where: {$0.id == tunnels[index].taskId}) else { return }
+            if !tunnels[index].config.usePassword && task.exitCode != 130 {
+                btnIcons[index] = "exclamationmark.triangle"
+            }
             openMainWindow()
         })
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.connectionErrorNotification), perform: { data in

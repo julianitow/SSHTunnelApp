@@ -68,6 +68,9 @@ struct ContentView: View {
             }
             viewModel.objectWillChange.send()
         })
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name.resetNotification), perform: { _ in
+            StorageService.erase()
+        })
         .onAppear() {
             self.viewModel.tunnels = self.SSHTunnels
         }

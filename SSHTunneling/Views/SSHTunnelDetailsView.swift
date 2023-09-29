@@ -11,6 +11,8 @@ struct SSHTunnelDetailsView: View {
     
     @StateObject var tunnel: SSHTunnel
     @Binding var updated: Bool
+    @State var passwordAuthentication: Bool = false
+    @State var password: String = ""
     
     var body: some View {
         VStack {
@@ -36,17 +38,29 @@ struct SSHTunnelDetailsView: View {
                 Text("Server port:")
                 TextField("", value: $tunnel.config.distantPort, format: .number)
             }
+            HStack {
+                Text("Authentication:")
+                Toggle(isOn: $passwordAuthentication) {
+                    Text("Use password")
+                    Text("less secured")
+                        .fontWeight(.light)
+                }
+                TextField("Password", text: $tunnel.config.password)
+                    .disabled(!passwordAuthentication)
+            }
             Divider()
             HStack {
                 Text("Result SSH command for this tunnel:")
                 Text(tunnel.cmd ?? "config not applied")
                     .bold()
                     .italic()
+                    .textSelection(.enabled)
             }
             Divider()
             HStack {
                 Button("Save", systemImage: "opticaldisc.fill") {
                     tunnel.updateConfig(config: tunnel.config)
+                    tunnel.config.usePassword = passwordAuthentication
                     StorageService.updateConfig(config: tunnel.config)
                     self.updated.toggle()
                     NotificationCenter.default.post(name: Notification.Name.updateNotification, object: "updateAction:\(tunnel.id)")
@@ -65,6 +79,12 @@ struct SSHTunnelDetailsView: View {
                 }
                 .background(.red, in: .buttonBorder)
                 .disabled(tunnel.isConnected)
+            }
+        }
+        .onAppear {
+            passwordAuthentication = tunnel.config.usePassword
+            if passwordAuthentication {
+                password = tunnel.config.password
             }
         }
         .padding()

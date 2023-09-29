@@ -33,6 +33,9 @@ struct SSHTunnelingApp: App {
                 Button("New tunnel") {
                     NotificationCenter.default.post(name: Notification.Name.newNotification, object: "")
                 }
+                Button("Reset configs") {
+                    NotificationCenter.default.post(name: Notification.Name.resetNotification, object: "resetConfig")
+                }
             }
             CommandGroup(replacing: .saveItem) {
                 EmptyView()

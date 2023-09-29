@@ -18,9 +18,6 @@ class StorageService {
         do {
             let userDefaults = UserDefaults.standard
             var configs = try getConfigs()
-            if configs.count == 0 {
-                return
-            }
             if let index = configs.firstIndex(where: {$0.id == config.id}) {
                 configs[index] = config
             } else {

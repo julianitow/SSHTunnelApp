@@ -16,6 +16,8 @@ class SSHTunnelConfig: Codable, Equatable, ObservableObject {
     public var localPort: Int
     public var distantPort: Int
     public var username: String
+    public var usePassword: Bool
+    public var password: String = ""
     
     init(name: String, username: String, serverIP: String, to: String, localPort: Int, distantPort: Int) {
         self.id = UUID()
@@ -25,6 +27,7 @@ class SSHTunnelConfig: Codable, Equatable, ObservableObject {
         self.localPort = localPort
         self.distantPort = distantPort
         self.username = username
+        self.usePassword = false
     }
     
     static func duplicate(from: SSHTunnelConfig) -> SSHTunnelConfig {

@@ -12,6 +12,10 @@ extension Notification.Name {
 }
 
 extension Notification.Name {
+    static let resetNotification = Notification.Name("resetNotification")
+}
+
+extension Notification.Name {
     static let updateNotification = Notification.Name("UpdateNotification")
 }
 
