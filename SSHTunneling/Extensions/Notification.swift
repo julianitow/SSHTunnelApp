@@ -8,7 +8,7 @@
 import Foundation
 
 extension Notification.Name {
-    static let newNotification = Notification.Name("NewNotification")
+    static let newNotification = Notification.Name("newNotification")
 }
 
 extension Notification.Name {
@@ -16,7 +16,7 @@ extension Notification.Name {
 }
 
 extension Notification.Name {
-    static let updateNotification = Notification.Name("UpdateNotification")
+    static let updateNotification = Notification.Name("updateNotification")
 }
 
 extension Notification.Name {

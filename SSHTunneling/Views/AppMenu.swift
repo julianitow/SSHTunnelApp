@@ -11,9 +11,8 @@ struct AppMenu: View {
 
     public var tunnels: [SSHTunnel]!
     
-    @Environment(\.openWindow) var openWindow
     @State var btnIcons: [String] = []
-    @State var updated: Bool = false
+    @State private var updated: Bool = false
     
     init(tunnels: [SSHTunnel]) {
         self.tunnels = tunnels
@@ -22,9 +21,11 @@ struct AppMenu: View {
             icons.append("circle.dotted")
         }
         _btnIcons = State(initialValue: icons)
+        _updated = State(initialValue: false)
     }
     
     func openMainWindow() -> Void {
+        self.updated.toggle()
         NSApp.setActivationPolicy(.regular)
         DispatchQueue.main.async {
             let window = NSApp.windows.firstIndex(where: { $0.title == "SSHTunneling"})
@@ -62,9 +63,6 @@ struct AppMenu: View {
         {
             NSApplication.shared.terminate(nil)
         }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name.updateNotification), perform: { data in
-            self.updated.toggle()
-        })
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.processTerminateNotification), perform: { data in
             let id = data.object as? UUID
             guard let index = tunnels.firstIndex(where: { $0.taskId == id }) else { return }
@@ -79,6 +77,10 @@ struct AppMenu: View {
             guard let index = tunnels.firstIndex(where: { $0.id == id }) else { return }
             btnIcons[index] = "exclamationmark.triangle"
             openMainWindow()
+        })
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name.updateNotification), perform: { data in
+            self.updated.toggle()
+
         })
     }
     

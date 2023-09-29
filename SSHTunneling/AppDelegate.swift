@@ -12,6 +12,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     var SSHTunnels: [SSHTunnel]!
     
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        if let window = NSApplication.shared.windows.first {
+            window.close()
+        }
+    }
+    
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
             return false
     }
