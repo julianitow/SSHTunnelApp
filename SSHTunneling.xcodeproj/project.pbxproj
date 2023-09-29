@@ -9,9 +9,10 @@
 /* Begin PBXBuildFile section */
 		EF2E791B2AC2D8E90084B2DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2E791A2AC2D8E90084B2DA /* AppDelegate.swift */; };
 		EF4858832AC5760D0046BFB8 /* SSHTunnelDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4858822AC5760D0046BFB8 /* SSHTunnelDetailsView.swift */; };
-		EF4858862AC5767A0046BFB8 /* SSHTunnelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4858852AC5767A0046BFB8 /* SSHTunnelViewModel.swift */; };
+		EF4858862AC5767A0046BFB8 /* SSHTunnelsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4858852AC5767A0046BFB8 /* SSHTunnelsViewModel.swift */; };
 		EF4858882AC582980046BFB8 /* SSHTunnelConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4858872AC582980046BFB8 /* SSHTunnelConfig.swift */; };
 		EF48588B2AC585BB0046BFB8 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48588A2AC585BB0046BFB8 /* StorageService.swift */; };
+		EF48588D2AC5D13E0046BFB8 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48588C2AC5D13E0046BFB8 /* Notification.swift */; };
 		EF53F9FA2ABCD1430028352E /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF53F9F92ABCD1430028352E /* App.swift */; };
 		EF53F9FC2ABCD1430028352E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF53F9FB2ABCD1430028352E /* ContentView.swift */; };
 		EF53F9FE2ABCD1440028352E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF53F9FD2ABCD1440028352E /* Assets.xcassets */; };
@@ -26,9 +27,10 @@
 /* Begin PBXFileReference section */
 		EF2E791A2AC2D8E90084B2DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF4858822AC5760D0046BFB8 /* SSHTunnelDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTunnelDetailsView.swift; sourceTree = "<group>"; };
-		EF4858852AC5767A0046BFB8 /* SSHTunnelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTunnelViewModel.swift; sourceTree = "<group>"; };
+		EF4858852AC5767A0046BFB8 /* SSHTunnelsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTunnelsViewModel.swift; sourceTree = "<group>"; };
 		EF4858872AC582980046BFB8 /* SSHTunnelConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTunnelConfig.swift; sourceTree = "<group>"; };
 		EF48588A2AC585BB0046BFB8 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		EF48588C2AC5D13E0046BFB8 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		EF53F9F62ABCD1430028352E /* SSHTunneling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SSHTunneling.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF53F9F92ABCD1430028352E /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		EF53F9FB2ABCD1430028352E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,7 +59,7 @@
 		EF4858842AC5766C0046BFB8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				EF4858852AC5767A0046BFB8 /* SSHTunnelViewModel.swift */,
+				EF4858852AC5767A0046BFB8 /* SSHTunnelsViewModel.swift */,
 				EF4858872AC582980046BFB8 /* SSHTunnelConfig.swift */,
 			);
 			path = Models;
@@ -143,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				EFC17CA22AC495400072A58F /* SSHTunnelErrorExtension.swift */,
+				EF48588C2AC5D13E0046BFB8 /* Notification.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -240,8 +243,9 @@
 				EF53F9FC2ABCD1430028352E /* ContentView.swift in Sources */,
 				EF53F9FA2ABCD1430028352E /* App.swift in Sources */,
 				EF7ED6272AC0587600A1FBAB /* SSHTunnel.swift in Sources */,
-				EF4858862AC5767A0046BFB8 /* SSHTunnelViewModel.swift in Sources */,
+				EF4858862AC5767A0046BFB8 /* SSHTunnelsViewModel.swift in Sources */,
 				EFC17CA32AC495400072A58F /* SSHTunnelErrorExtension.swift in Sources */,
+				EF48588D2AC5D13E0046BFB8 /* Notification.swift in Sources */,
 				EFC17CA02AC495220072A58F /* SSHTunnelError.swift in Sources */,
 				EF4858832AC5760D0046BFB8 /* SSHTunnelDetailsView.swift in Sources */,
 				EF2E791B2AC2D8E90084B2DA /* AppDelegate.swift in Sources */,
@@ -303,7 +307,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -357,7 +361,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;

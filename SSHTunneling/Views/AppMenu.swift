@@ -13,6 +13,7 @@ struct AppMenu: View {
     
     @Environment(\.openWindow) var openWindow
     @State var btnIcons: [String] = []
+    @State var updated: Bool = false
     
     init(tunnels: [SSHTunnel]) {
         self.tunnels = tunnels
@@ -23,14 +24,26 @@ struct AppMenu: View {
         _btnIcons = State(initialValue: icons)
     }
     
+    func openMainWindow() -> Void {
+        NSApp.setActivationPolicy(.regular)
+        DispatchQueue.main.async {
+            let window = NSApp.windows.firstIndex(where: { $0.title == "SSHTunneling"})
+            if window != nil {
+                NSApp.windows.first?.makeKeyAndOrderFront(nil)
+                NSApp.activate()
+            }
+        }
+    }
+    
     var body: some View {
         VStack {
             ForEach(0..<tunnels.count) { i in
                 HStack {
                     Button(tunnels[i].config.name, systemImage: btnIcons[i]) {
                         if !tunnels[i].isConnected {
-                            tunnels[i].connect()
-                            btnIcons[i] = "circle.fill"
+                            if tunnels[i].connect() {
+                                btnIcons[i] = "circle.fill"
+                            }
                             return
                         }
                         tunnels[i].disconnect()
@@ -42,22 +55,25 @@ struct AppMenu: View {
         }
         Divider()
         Button("Open window") {
-            NSApp.setActivationPolicy(.regular)
-            DispatchQueue.main.async {
-                let window = NSApp.windows.firstIndex(where: { $0.title == "SSHTunneling"})
-                if window != nil {
-                    NSApp.windows.first?.makeKeyAndOrderFront(nil)
-                    if #available(macOS 14.0, *) {
-                        NSApp.activate()
-                    }
-                }
-            }
+            openMainWindow()
         }
         Divider()
         Button("Quit")
         {
             NSApplication.shared.terminate(nil)
         }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name.processTerminateNotification), perform: { data in
+            let id = data.object as? UUID
+            guard let index = tunnels.firstIndex(where: { $0.taskId == id }) else { return }
+            btnIcons[index] = "exclamationmark.triangle"
+            openMainWindow()
+        })
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name.connectionErrorNotification), perform: { data in
+            let id = data.object as? UUID
+            guard let index = tunnels.firstIndex(where: { $0.id == id }) else { return }
+            btnIcons[index] = "exclamationmark.triangle"
+            openMainWindow()
+        })
     }
     
 }

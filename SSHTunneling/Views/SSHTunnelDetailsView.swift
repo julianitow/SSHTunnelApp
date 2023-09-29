@@ -9,14 +9,12 @@ import SwiftUI
 
 struct SSHTunnelDetailsView: View {
     
-    @State var tunnel: SSHTunnel
-    
-    init(tunnel: SSHTunnel) {
-        self.tunnel = tunnel
-    }
+    @StateObject var tunnel: SSHTunnel
+    @Binding var updated: Bool
     
     var body: some View {
         VStack {
+            Text(tunnel.config.name)
             HStack {
                 Text("Tunnel name:")
                 TextField("name", text: $tunnel.config.name)
@@ -38,6 +36,22 @@ struct SSHTunnelDetailsView: View {
                 Text("Server port:")
                 TextField("", value: $tunnel.config.distantPort, format: .number)
             }
+            Divider()
+            HStack {
+                Text("Result SSH command for this tunnel:")
+                Text(tunnel.cmd ?? "config not applied")
+                    .bold()
+                    .italic()
+            }
+            Divider()
+            Button("Save", systemImage: "opticaldisc.fill") {
+                tunnel.updateConfig(config: tunnel.config)
+                StorageService.updateConfig(config: tunnel.config)
+                self.updated.toggle()
+                NotificationCenter.default.post(name: Notification.Name.updateNotification, object: "")
+            }
+            .disabled(tunnel.isConnected)
         }
+        .padding()
     }
 }

@@ -10,22 +10,12 @@ import SwiftUI
 struct ContentView: View {
     
     @State var exitCode: Int32 = 0
-    @StateObject var viewModel = SSHTunnelViewModel()
+    @StateObject var viewModel = SSHTunnelsViewModel()
+    @State var updated: Bool = false
     
     var SSHTunnels: [SSHTunnel] = []
     
     mutating func createTunnels() {
-        let tunnelBeta = SSHTunnelConfig(name: "BETA", username: "***REMOVED***", serverIP: "***REMOVED***", to: "127.0.0.1", localPort: 27018, distantPort: 27017)
-        let tunnelProd = SSHTunnelConfig(name: "PROD-1", username: "***REMOVED***", serverIP: "***REMOVED***", to: "127.0.0.1", localPort: 27019, distantPort: 27017)
-        let tunnelProd2 = SSHTunnelConfig(name: "PROD-2", username: "***REMOVED***", serverIP: "***REMOVED***", to: "127.0.0.1", localPort: 27020, distantPort: 27017)
-        let tunnelProd3 = SSHTunnelConfig(name: "PROD-3", username: "***REMOVED***", serverIP: "***REMOVED***", to: "127.0.0.1", localPort: 27021, distantPort: 27017)
-        /*self.SSHTunnels.append(SSHTunnel(config: tunnelBeta))
-        self.SSHTunnels.append(SSHTunnel(config: tunnelProd))
-        self.SSHTunnels.append(SSHTunnel(config: tunnelProd2))
-        self.SSHTunnels.append(SSHTunnel(config: tunnelProd3))*/
-        
-        //StorageService.saveConfig(config: tunnelBeta)
-                
         do {
             let configs = try StorageService.getConfigs()
             for config in configs {
@@ -35,6 +25,8 @@ struct ContentView: View {
             print("\(error)")
         }
     }
+    
+    
     
     func run() {
         for tunnel in self.SSHTunnels {
@@ -49,28 +41,31 @@ struct ContentView: View {
         self.createTunnels()
     }
     
+    mutating func newConfig() -> Void {
+        self.SSHTunnels.append(SSHTunnel())
+    }
+    
     var body: some View {
         NavigationView {
             List {
-                ForEach(SSHTunnels, id: \.self.taskId) { tunnel in
-                    NavigationLink(tunnel.config.name, tag: tunnel.taskId, selection: $viewModel.selectedId) {
-                        SSHTunnelDetailsView(tunnel: tunnel)
+                ForEach(viewModel.tunnels, id: \.self.taskId) { tunnel in
+                    NavigationLink(tunnel.config.name, tag: tunnel.id, selection: $viewModel.selectedId) {
+                        SSHTunnelDetailsView(tunnel: tunnel, updated: $updated)
+                            .onChange(of: updated) {
+                                viewModel.objectWillChange.send()
+                            }
+                    }
+                    .onChange(of: tunnel) {
+                        print("CONFIG UPDATED")
                     }
                 }
             }
             .listStyle(.sidebar)
             Text("No selection")
         }
-        /*VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text(String(exitCode))
-        }
-        .padding()
-        .task {
-            //self.run()
-        }*/
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name.newNotification), perform: { _ in
+            self.viewModel.tunnels.append(SSHTunnel())
+        })
         .onAppear() {
             self.viewModel.tunnels = self.SSHTunnels
         }

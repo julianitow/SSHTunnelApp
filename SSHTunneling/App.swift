@@ -13,7 +13,7 @@ struct SSHTunnelingApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @Environment(\.scenePhase) private var scenePhase
     
-    let contentView: ContentView
+    var contentView: ContentView
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
     init() {
@@ -28,14 +28,31 @@ struct SSHTunnelingApp: App {
                     self.appDelegate.SSHTunnels = self.contentView.SSHTunnels
                 }
         }
-        MenuBarExtra("SSH Tunneling", systemImage: "rectangle.connected.to.line.below") {
-            AppMenu(tunnels: self.contentView.SSHTunnels)
-        }
-        .menuBarExtraStyle(.menu)
-        .onChange(of: scenePhase) { phase in
-            if phase == .background {
-                // REMOVE ICON FROM DOCK
+        .commands {
+            CommandGroup(replacing: .newItem) {
+                Button("New tunnel") {
+                    NotificationCenter.default.post(name: Notification.Name.newNotification, object: "")
+                }
+            }
+            CommandGroup(replacing: .saveItem) {
+                EmptyView()
+            }
+            CommandGroup(replacing: .printItem) {
+                EmptyView()
+            }
+            CommandGroup(replacing: .undoRedo) {
+                EmptyView()
+            }
+            CommandGroup(replacing: .pasteboard) {
+                EmptyView()
             }
         }
+        MenuBarExtra("SSH Tunneling", systemImage: "rectangle.connected.to.line.below") {
+            AppMenu(tunnels: self.contentView.SSHTunnels)
+                .onChange(of: self.contentView.updated) {
+                    print("here")
+                }
+        }
+        .menuBarExtraStyle(.menu)
     }
 }

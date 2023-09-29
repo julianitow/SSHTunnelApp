@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SSHTunnelConfig: Codable {
+class SSHTunnelConfig: Codable, Equatable, ObservableObject {
     
     public var id: UUID
     public var name: String
@@ -25,5 +25,9 @@ struct SSHTunnelConfig: Codable {
         self.localPort = localPort
         self.distantPort = distantPort
         self.username = username
+    }
+    
+    static func == (lhs: SSHTunnelConfig, rhs: SSHTunnelConfig) -> Bool {
+        return lhs.id == rhs.id && lhs.name == rhs.name && lhs.serverIP == rhs.serverIP && lhs.toIP == rhs.toIP && lhs.localPort == rhs.localPort && lhs.distantPort == rhs.distantPort && lhs.username == rhs.username
     }
 }

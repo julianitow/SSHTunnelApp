@@ -74,6 +74,9 @@ class ShellService {
             return
         }
         tasks[index].exitCode = process.terminationStatus
+        DispatchQueue.main.sync {
+            NotificationCenter.default.post(name: Notification.Name.processTerminateNotification, object: tasks[index].id)
+        }
     }
     
     static func suspendTask(id: UUID) -> Void {

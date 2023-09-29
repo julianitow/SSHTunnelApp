@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class SSHTunnelViewModel: ObservableObject {
+final class SSHTunnelsViewModel: ObservableObject {
     
     @Published var tunnels: [SSHTunnel]
     @Published var selectedId: UUID?
