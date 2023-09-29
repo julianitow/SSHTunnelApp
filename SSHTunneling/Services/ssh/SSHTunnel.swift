@@ -19,7 +19,7 @@ class SSHTunnel: Equatable, ObservableObject {
     init(config: SSHTunnelConfig) {
         self.id = UUID()
         self.config = config
-        let cmd = "ssh \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort)"
+        let cmd = "ssh -o \"StrictHostKeyChecking no\" \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort)"
         self.cmd = cmd
         self.taskId = ShellService.createShellTask(cmd)
     }
@@ -32,7 +32,7 @@ class SSHTunnel: Equatable, ObservableObject {
     }
     
     func setCommand() -> Void {
-        let cmd = "ssh \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort)"
+        let cmd = "ssh -o \"StrictHostKeyChecking no\" \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort)"
         self.cmd = cmd
         self.taskId = ShellService.createShellTask(cmd)
     }
@@ -47,7 +47,7 @@ class SSHTunnel: Equatable, ObservableObject {
         return ShellService.isRunning(id: self.taskId)
     }
     
-    func connect(_ linkOutput: Bool? = false) -> Bool {
+    func connect(_ linkOutput: Bool? = false, password: String? = nil) -> Bool {
         do {
             if ShellService.isSuspended(id: taskId) {
                 if !ShellService.resumeTask(id: taskId) {
@@ -55,7 +55,7 @@ class SSHTunnel: Equatable, ObservableObject {
                 }
                 return true
             }
-            try ShellService.runTask(taskId, linkOutput)
+            try ShellService.runTask(taskId, linkOutput, input: password)
         } catch {
             print("SSHTunnel::connect::error => \(error)")
             self.setCommand()

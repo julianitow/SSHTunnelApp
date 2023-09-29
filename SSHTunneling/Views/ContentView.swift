@@ -59,6 +59,12 @@ struct ContentView: View {
                 guard let index = self.viewModel.tunnels.firstIndex(where: { $0.id == id }) else { return }
                 self.viewModel.tunnels.remove(at: index)
                 self.viewModel.selectedId = nil
+            } else if splitted[0] == "duplicateAction" {
+                guard let id = UUID(uuidString: String(splitted[1])) else { return }
+                guard let index = self.viewModel.tunnels.firstIndex(where: { $0.id == id }) else { return }
+                let duplicatedConfig = SSHTunnelConfig.duplicate(from: self.viewModel.tunnels[index].config)
+                StorageService.saveConfig(config: duplicatedConfig)
+                self.viewModel.tunnels.append(SSHTunnel(config: duplicatedConfig))
             }
             viewModel.objectWillChange.send()
         })

@@ -27,6 +27,10 @@ class SSHTunnelConfig: Codable, Equatable, ObservableObject {
         self.username = username
     }
     
+    static func duplicate(from: SSHTunnelConfig) -> SSHTunnelConfig {
+        return SSHTunnelConfig(name: "\(from.name) - copy", username: from.username, serverIP: from.serverIP, to: from.toIP, localPort: from.localPort, distantPort: from.distantPort)
+    }
+    
     static func == (lhs: SSHTunnelConfig, rhs: SSHTunnelConfig) -> Bool {
         return lhs.id == rhs.id && lhs.name == rhs.name && lhs.serverIP == rhs.serverIP && lhs.toIP == rhs.toIP && lhs.localPort == rhs.localPort && lhs.distantPort == rhs.distantPort && lhs.username == rhs.username
     }

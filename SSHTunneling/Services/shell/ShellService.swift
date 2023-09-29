@@ -11,14 +11,16 @@ struct ShellTask {
     var id: UUID
     var process: Process
     var pipe: Pipe
+    var inputPipe: Pipe
     var output: String?
     var exitCode: Int32 = 0
     var isSuspended: Bool = false
     
-    init(_ process: Process, _ pipe: Pipe) {
+    init(_ process: Process, _ pipe: Pipe, _ inputPipe: Pipe) {
         self.id = UUID.init()
         self.process = process
         self.pipe = pipe
+        self.inputPipe = inputPipe
     }
 }
 
@@ -31,16 +33,17 @@ class ShellService {
     static func createShellTask(_ command: String) -> UUID {
         let process = Process()
         let pipe = Pipe()
+        let inputPipe = Pipe()
         
         process.standardOutput = pipe
         process.standardError = pipe
-        process.standardInput = nil
+        process.standardInput = inputPipe
         process.arguments = ["-c", command]
         process.executableURL = URL(filePath: "/bin/zsh")
         process.terminationHandler = terminationHander
         process.qualityOfService = .utility
         
-        let shellTask = ShellTask(process, pipe)
+        let shellTask = ShellTask(process, pipe, inputPipe)
                 
         tasks.append(shellTask)
         
@@ -95,9 +98,13 @@ class ShellService {
         }
     }
     
-    static func runTask(_ id: UUID, _ linkOutput: Bool? = false) throws -> Void {
+    static func runTask(_ id: UUID, _ linkOutput: Bool? = false, input: String? = nil) throws -> Void {
         for task in tasks where task.id == id {
+            
             try task.process.run()
+            if input != nil {
+                task.inputPipe.fileHandleForWriting.write(input!.data(using: .utf8)!)
+            }
             if (linkOutput!) {
                 linkOutputOf(id)
             }

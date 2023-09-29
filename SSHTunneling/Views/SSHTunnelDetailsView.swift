@@ -44,21 +44,28 @@ struct SSHTunnelDetailsView: View {
                     .italic()
             }
             Divider()
-            Button("Save", systemImage: "opticaldisc.fill") {
-                tunnel.updateConfig(config: tunnel.config)
-                StorageService.updateConfig(config: tunnel.config)
-                self.updated.toggle()
-                NotificationCenter.default.post(name: Notification.Name.updateNotification, object: "updateAction:\(tunnel.id)")
+            HStack {
+                Button("Save", systemImage: "opticaldisc.fill") {
+                    tunnel.updateConfig(config: tunnel.config)
+                    StorageService.updateConfig(config: tunnel.config)
+                    self.updated.toggle()
+                    NotificationCenter.default.post(name: Notification.Name.updateNotification, object: "updateAction:\(tunnel.id)")
+                }
+                .background(.green, in: .buttonBorder)
+                .disabled(tunnel.isConnected)
+                Button("Duplicate", systemImage: "doc.on.doc") {
+                    self.updated.toggle()
+                    NotificationCenter.default.post(name: Notification.Name.updateNotification, object: "duplicateAction:\(tunnel.id)")
+                }
+                .background(.blue, in: .buttonBorder)
+                Button("Delete", systemImage: "trash.fill") {
+                    StorageService.removeConfig(config: tunnel.config)
+                    self.updated.toggle()
+                    NotificationCenter.default.post(name: Notification.Name.updateNotification, object: "removeAction:\(tunnel.id)")
+                }
+                .background(.red, in: .buttonBorder)
+                .disabled(tunnel.isConnected)
             }
-            .background(.green, in: .buttonBorder)
-            .disabled(tunnel.isConnected)
-            Button("Delete", systemImage: "trash.fill") {
-                StorageService.removeConfig(config: tunnel.config)
-                self.updated.toggle()
-                NotificationCenter.default.post(name: Notification.Name.updateNotification, object: "removeAction:\(tunnel.id)")
-            }
-            .background(.red, in: .buttonBorder)
-            .disabled(tunnel.isConnected)
         }
         .padding()
     }
