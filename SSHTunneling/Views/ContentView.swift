@@ -16,17 +16,6 @@ struct ContentView: View {
     var SSHTunnels: [SSHTunnel] = []
     
     mutating func createTunnels() {
-        let tunnelBeta = SSHTunnelConfig(name: "BETA", username: "***REMOVED***", serverIP: "***REMOVED***", to: "127.0.0.1", localPort: 27018, distantPort: 27017)
-        let tunnelProd = SSHTunnelConfig(name: "PROD-1", username: "***REMOVED***", serverIP: "***REMOVED***", to: "127.0.0.1", localPort: 27019, distantPort: 27017)
-        let tunnelProd2 = SSHTunnelConfig(name: "PROD-2", username: "***REMOVED***", serverIP: "***REMOVED***", to: "127.0.0.1", localPort: 27020, distantPort: 27017)
-        let tunnelProd3 = SSHTunnelConfig(name: "PROD-3", username: "***REMOVED***", serverIP: "***REMOVED***", to: "127.0.0.1", localPort: 27021, distantPort: 27017)
-        /*self.SSHTunnels.append(SSHTunnel(config: tunnelBeta))
-        self.SSHTunnels.append(SSHTunnel(config: tunnelProd))
-        self.SSHTunnels.append(SSHTunnel(config: tunnelProd2))
-        self.SSHTunnels.append(SSHTunnel(config: tunnelProd3))*/
-        
-        //StorageService.saveConfig(config: tunnelProd)
-        
         do {
             let configs = try StorageService.getConfigs()
             for config in configs {
@@ -34,17 +23,6 @@ struct ContentView: View {
             }
         } catch {
             print("\(error)")
-        }
-    }
-    
-    
-    
-    func run() {
-        for tunnel in self.SSHTunnels {
-            DispatchQueue.global(qos: .background).async {
-                _ = tunnel.connect()
-                self.exitCode = ShellService.tasks.first(where: {$0.id == tunnel.taskId})!.exitCode
-            }
         }
     }
     
@@ -71,8 +49,18 @@ struct ContentView: View {
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.newNotification), perform: { _ in
             self.viewModel.tunnels.append(SSHTunnel())
         })
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name.updateNotification), perform: { _ in
-            viewModel.objectWillChange.send()
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name.updateNotification), perform: { data in
+            let action = data.object as?String
+            guard let splitted = action?.split(separator: ":") else {
+                viewModel.objectWillChange.send()
+                return
+            }
+            if splitted[0] == "removeAction" {
+                guard let id = UUID(uuidString: String(splitted[1])) else { return }
+                guard let index = self.viewModel.tunnels.firstIndex(where: { $0.id == id }) else { return }
+                self.viewModel.tunnels.remove(at: index)
+                self.viewModel.selectedId = nil
+            }
         })
         .onAppear() {
             self.viewModel.tunnels = self.SSHTunnels

@@ -33,6 +33,23 @@ class StorageService {
         }
     }
     
+    static func removeConfig(config: SSHTunnelConfig) -> Void {
+        do {
+            let userDefaults = UserDefaults.standard
+            var configs = try getConfigs()
+            if configs.count == 0 {
+                return
+            }
+            if let index = configs.firstIndex(where: {$0.id == config.id}) {
+                configs.remove(at: index)
+            }
+            let encodedConfigs = try JSONEncoder().encode(configs)
+            userDefaults.setValue(encodedConfigs, forKey: "configs")
+        } catch {
+            print("Error saving configs \(error)")
+        }
+    }
+    
     static func saveConfig(config: SSHTunnelConfig) -> Void {
         do {
             let userDefaults = UserDefaults.standard
