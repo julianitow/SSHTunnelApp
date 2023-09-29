@@ -10,7 +10,8 @@ import SwiftUI
 struct ContentView: View {
     
     @State var exitCode: Int32 = 0
-    @StateObject var viewModel = SSHTunnelsViewModel()
+    //@StateObject var viewModel = SSHTunnelsViewModel()
+    @EnvironmentObject var viewModel: SSHTunnelsViewModel
     @State var updated: Bool = false
     
     var SSHTunnels: [SSHTunnel] = []
@@ -66,6 +67,7 @@ struct ContentView: View {
                 StorageService.saveConfig(config: duplicatedConfig)
                 self.viewModel.tunnels.append(SSHTunnel(config: duplicatedConfig))
             }
+            print(self.SSHTunnels.count)
             viewModel.objectWillChange.send()
         })
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.resetNotification), perform: { _ in

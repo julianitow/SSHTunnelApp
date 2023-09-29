@@ -61,14 +61,14 @@ class SSHTunnel: Equatable, ObservableObject {
     
     func connect(_ linkOutput: Bool? = false, password: String? = nil) -> Bool {
         do {
-            if ShellService.isSuspended(id: taskId) && !self.config.usePassword {
+            /*if ShellService.isSuspended(id: taskId) {
                 if !ShellService.resumeTask(id: taskId) {
                     throw SSHTunnelError.ErrorResumingTask
                 }
-                return true
             } else {
-                self.setCommand()
-            }
+                
+            }*/
+            self.setCommand()
             try ShellService.runTask(taskId, linkOutput, input: password)
         } catch {
             print("SSHTunnel::connect::error => \(error)")
@@ -80,10 +80,7 @@ class SSHTunnel: Equatable, ObservableObject {
     }
     
     func disconnect() -> Void {
-        if self.config.usePassword {
-            return ShellService.stopTask(id: self.taskId)
-        }
-        ShellService.suspendTask(id: self.taskId)
+        return ShellService.stopTask(id: self.taskId)
     }
     
     static func == (lhs: SSHTunnel, rhs: SSHTunnel) -> Bool {

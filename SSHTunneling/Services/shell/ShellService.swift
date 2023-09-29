@@ -52,7 +52,8 @@ class ShellService {
     
     static func isRunning(id: UUID) -> Bool {
         for task in tasks where task.id == id {
-            return task.process.isRunning && !task.isSuspended
+            print(task.process.isRunning)
+            return task.process.isRunning
         }
         return false
     }

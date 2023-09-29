@@ -12,6 +12,7 @@ struct SSHTunnelingApp: App {
     
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @Environment(\.scenePhase) private var scenePhase
+    @StateObject var viewModel = SSHTunnelsViewModel()
     
     var contentView: ContentView
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
@@ -24,6 +25,7 @@ struct SSHTunnelingApp: App {
     var body: some Scene {
         Window("SSHTunneling", id: "main-window") {
             self.contentView
+                .environmentObject(viewModel)
                 .onAppear {
                     self.appDelegate.SSHTunnels = self.contentView.SSHTunnels
                 }
@@ -52,6 +54,7 @@ struct SSHTunnelingApp: App {
         }
         MenuBarExtra("SSH Tunneling", systemImage: "rectangle.connected.to.line.below") {
             AppMenu(tunnels: self.contentView.SSHTunnels)
+                .environmentObject(viewModel)
         }
         .menuBarExtraStyle(.menu)
     }

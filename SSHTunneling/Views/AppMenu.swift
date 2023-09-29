@@ -9,10 +9,12 @@ import SwiftUI
 
 struct AppMenu: View {
 
-    public var tunnels: [SSHTunnel]!
+    @State public var tunnels: [SSHTunnel] = []
     
     @State var btnIcons: [String] = []
     @State private var updated: Bool = false
+    
+    @EnvironmentObject var viewModel: SSHTunnelsViewModel
     
     init(tunnels: [SSHTunnel]) {
         self.tunnels = tunnels
@@ -25,7 +27,6 @@ struct AppMenu: View {
     }
     
     func openMainWindow() -> Void {
-        self.updated.toggle()
         NSApp.setActivationPolicy(.regular)
         DispatchQueue.main.async {
             let window = NSApp.windows.firstIndex(where: { $0.title == "SSHTunneling"})
@@ -38,16 +39,16 @@ struct AppMenu: View {
     
     var body: some View {
         VStack {
-            ForEach(0..<tunnels.count) { i in
+            ForEach(0..<viewModel.tunnels.count, id: \.self) { i in
                 HStack {
-                    Button(tunnels[i].config.name, systemImage: btnIcons[i]) {
-                        if !tunnels[i].isConnected {
-                            if tunnels[i].connect() {
+                    Button(viewModel.tunnels[i].config.name, systemImage: btnIcons[i]) {
+                        if !viewModel.tunnels[i].isConnected {
+                            if viewModel.tunnels[i].connect() {
                                 btnIcons[i] = "circle.fill"
                             }
                             return
                         }
-                        tunnels[i].disconnect()
+                        viewModel.tunnels[i].disconnect()
                         btnIcons[i] = "circle.dotted"
                     }
                     .labelStyle(.titleAndIcon)
@@ -65,23 +66,30 @@ struct AppMenu: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.processTerminateNotification), perform: { data in
             let id = data.object as? UUID
-            guard let index = tunnels.firstIndex(where: { $0.taskId == id }) else { return }
-            guard let task = ShellService.tasks.first(where: {$0.id == tunnels[index].taskId}) else { return }
-            if !tunnels[index].config.usePassword && task.exitCode != 130 {
+            guard let index = viewModel.tunnels.firstIndex(where: { $0.taskId == id }) else { return }
+            guard let task = ShellService.tasks.first(where: {$0.id == viewModel.tunnels[index].taskId}) else { return }
+            if !viewModel.tunnels[index].config.usePassword && task.exitCode != 130 {
                 btnIcons[index] = "exclamationmark.triangle"
             }
             openMainWindow()
         })
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.connectionErrorNotification), perform: { data in
             let id = data.object as? UUID
-            guard let index = tunnels.firstIndex(where: { $0.id == id }) else { return }
+            guard let index = viewModel.tunnels.firstIndex(where: { $0.id == id }) else { return }
             btnIcons[index] = "exclamationmark.triangle"
             openMainWindow()
         })
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name.updateNotification), perform: { data in
-            self.updated.toggle()
-
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name.newNotification), perform: { data in
+            self.btnIcons.append("circle.dotted")
         })
+        .onAppear {
+            print(viewModel.tunnels)
+            var icons: [String] = []
+            for _ in 0..<viewModel.tunnels.count {
+                icons.append("circle.dotted")
+            }
+            self.btnIcons = icons
+        }
     }
     
 }
