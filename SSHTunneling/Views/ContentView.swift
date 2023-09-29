@@ -50,9 +50,8 @@ struct ContentView: View {
             self.viewModel.tunnels.append(SSHTunnel())
         })
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.updateNotification), perform: { data in
-            let action = data.object as?String
+            let action = data.object as? String
             guard let splitted = action?.split(separator: ":") else {
-                viewModel.objectWillChange.send()
                 return
             }
             if splitted[0] == "removeAction" {
@@ -61,6 +60,7 @@ struct ContentView: View {
                 self.viewModel.tunnels.remove(at: index)
                 self.viewModel.selectedId = nil
             }
+            viewModel.objectWillChange.send()
         })
         .onAppear() {
             self.viewModel.tunnels = self.SSHTunnels

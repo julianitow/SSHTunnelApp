@@ -48,7 +48,7 @@ struct SSHTunnelDetailsView: View {
                 tunnel.updateConfig(config: tunnel.config)
                 StorageService.updateConfig(config: tunnel.config)
                 self.updated.toggle()
-                NotificationCenter.default.post(name: Notification.Name.updateNotification, object: "")
+                NotificationCenter.default.post(name: Notification.Name.updateNotification, object: "updateAction:\(tunnel.id)")
             }
             .background(.green, in: .buttonBorder)
             .disabled(tunnel.isConnected)
