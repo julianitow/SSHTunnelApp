@@ -37,6 +37,14 @@ struct AppMenu: View {
         }
     }
     
+    func refreshIcons() -> Void {
+        var icons: [String] = []
+        for _ in 0..<viewModel.tunnels.count {
+            icons.append("circle.dotted")
+        }
+        self.btnIcons = icons
+    }
+    
     var body: some View {
         VStack {
             ForEach(0..<viewModel.tunnels.count, id: \.self) { i in
@@ -82,12 +90,17 @@ struct AppMenu: View {
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.newNotification), perform: { data in
             self.btnIcons.append("circle.dotted")
         })
-        .onAppear {
-            var icons: [String] = []
-            for _ in 0..<viewModel.tunnels.count {
-                icons.append("circle.dotted")
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name.updateNotification), perform: { data in
+            let action = data.object as? String
+            guard let splitted = action?.split(separator: ":") else {
+                return
             }
-            self.btnIcons = icons
+            if splitted[0] == "duplicateAction" {
+                self.refreshIcons()
+            }
+        })
+        .onAppear {
+            self.refreshIcons()
         }
     }
     

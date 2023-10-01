@@ -12,7 +12,6 @@ struct SSHTunnelDetailsView: View {
     @StateObject var tunnel: SSHTunnel
     @Binding var updated: Bool
     @State var passwordAuthentication: Bool = false
-    @State var password: String = ""
     
     var body: some View {
         VStack {
@@ -83,9 +82,6 @@ struct SSHTunnelDetailsView: View {
         }
         .onAppear {
             passwordAuthentication = tunnel.config.usePassword
-            if passwordAuthentication {
-                password = tunnel.config.password
-            }
         }
         .padding()
     }
