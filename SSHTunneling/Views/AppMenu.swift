@@ -68,10 +68,10 @@ struct AppMenu: View {
             let id = data.object as? UUID
             guard let index = viewModel.tunnels.firstIndex(where: { $0.taskId == id }) else { return }
             guard let task = ShellService.tasks.first(where: {$0.id == viewModel.tunnels[index].taskId}) else { return }
-            if !viewModel.tunnels[index].config.usePassword && task.exitCode != 130 {
+            if !viewModel.tunnels[index].config.usePassword && task.exitCode != 130 && task.exitCode != 0 {
                 btnIcons[index] = "exclamationmark.triangle"
+                openMainWindow()
             }
-            openMainWindow()
         })
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.connectionErrorNotification), perform: { data in
             let id = data.object as? UUID
@@ -83,7 +83,6 @@ struct AppMenu: View {
             self.btnIcons.append("circle.dotted")
         })
         .onAppear {
-            print(viewModel.tunnels)
             var icons: [String] = []
             for _ in 0..<viewModel.tunnels.count {
                 icons.append("circle.dotted")

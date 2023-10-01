@@ -52,7 +52,6 @@ class ShellService {
     
     static func isRunning(id: UUID) -> Bool {
         for task in tasks where task.id == id {
-            print(task.process.isRunning)
             return task.process.isRunning
         }
         return false
@@ -77,6 +76,7 @@ class ShellService {
         else {
             return
         }
+        linkOutputOf(index)
         tasks[index].exitCode = process.terminationStatus
         DispatchQueue.main.sync {
             NotificationCenter.default.post(name: Notification.Name.processTerminateNotification, object: tasks[index].id)
@@ -91,7 +91,7 @@ class ShellService {
     static func stopTask(id: UUID) -> Void {
         guard let index = tasks.firstIndex(where: {$0.id == id}) else { print("TASK ID NOT FOUND"); return }
         tasks[index].isSuspended = true
-        tasks[index].process.interrupt()
+        tasks[index].process.terminate()
     }
     
     static func runAllTasks(_ linkOutput: Bool? = false) throws -> Void {
@@ -127,7 +127,7 @@ class ShellService {
             tasks[index].output = String(data: data!, encoding: .utf8)!
         }
         guard let output = tasks[index].output else {
-            print("Empty output")
+            print("Empty output, no task")
             return
         }
         print(output)

@@ -67,7 +67,6 @@ struct ContentView: View {
                 StorageService.saveConfig(config: duplicatedConfig)
                 self.viewModel.tunnels.append(SSHTunnel(config: duplicatedConfig))
             }
-            print(self.SSHTunnels.count)
             viewModel.objectWillChange.send()
         })
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.resetNotification), perform: { _ in

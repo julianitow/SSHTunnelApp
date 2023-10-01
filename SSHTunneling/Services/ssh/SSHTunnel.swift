@@ -23,9 +23,9 @@ class SSHTunnel: Equatable, ObservableObject {
             if config.password.contains("$") && !config.password.contains("\\$") {
                 config.password = config.password.replacingOccurrences(of: "$", with: "\\$")
             }
-            self.cmd = "/usr/bin/expect -c 'spawn ssh -o \"StrictHostKeyChecking no\" \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort) ; expect \"password:\" ; send \"\(config.password)\n\" ;  interact'"
+            self.cmd = "/usr/bin/expect -c 'spawn ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort) ; expect { -re \"password:\" {send \"\(config.password)\n\"} } ;  expect eof ; catch wait result; exit [lindex $result 3]'"
         } else {
-            self.cmd = "ssh -o \"StrictHostKeyChecking no\" \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort)"
+            self.cmd = "ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort)"
         }
         self.taskId = ShellService.createShellTask(self.cmd!)
     }
@@ -42,9 +42,9 @@ class SSHTunnel: Equatable, ObservableObject {
             if config.password.contains("$") && !config.password.contains("\\$") {
                 config.password = config.password.replacingOccurrences(of: "$", with: "\\$")
             }
-            self.cmd = "/usr/bin/expect -c 'spawn ssh -o \"StrictHostKeyChecking no\" \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort) ; expect \"password:\" ; send \"\(config.password)\n\" ;  interact'"
+            self.cmd = "/usr/bin/expect -c 'spawn ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort) ; expect { -re \"password:\" {send \"\(config.password)\n\"} } ;  expect eof ; catch wait result; exit [lindex $result 3]'"
         } else {
-            self.cmd = "ssh -o \"StrictHostKeyChecking no\" \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort)"
+            self.cmd = "ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort)"
         }
         self.taskId = ShellService.createShellTask(self.cmd!)
     }
