@@ -72,7 +72,6 @@ struct SSHTunnelDetailsView: View {
                 }
                 .background(.blue, in: .buttonBorder)
                 Button("Delete", systemImage: "trash.fill") {
-                    StorageService.removeConfig(config: tunnel.config)
                     self.updated.toggle()
                     NotificationCenter.default.post(name: Notification.Name.updateNotification, object: "removeAction:\(tunnel.id)")
                 }

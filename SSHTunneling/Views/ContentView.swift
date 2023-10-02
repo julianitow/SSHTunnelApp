@@ -10,7 +10,6 @@ import SwiftUI
 struct ContentView: View {
     
     @State var exitCode: Int32 = 0
-    //@StateObject var viewModel = SSHTunnelsViewModel()
     @EnvironmentObject var viewModel: SSHTunnelsViewModel
     @State var updated: Bool = false
     
@@ -35,12 +34,34 @@ struct ContentView: View {
         self.SSHTunnels.append(SSHTunnel())
     }
     
+    func removeConfigFor(tunnel: SSHTunnel) -> Void {
+        guard let index = self.viewModel.tunnels.firstIndex(where: { $0.id == tunnel.id }) else { return }
+        self.viewModel.tunnels.remove(at: index)
+        StorageService.removeConfig(config: tunnel.config)
+    }
+    
+    func duplicateConfigFor(tunnel: SSHTunnel) -> Void {
+        let duplicatedConfig = SSHTunnelConfig.duplicate(from: tunnel.config)
+        StorageService.saveConfig(config: duplicatedConfig)
+        self.viewModel.tunnels.append(SSHTunnel(config: duplicatedConfig))
+    }
+    
     var body: some View {
         NavigationView {
             List {
                 ForEach(viewModel.tunnels, id: \.self.taskId) { tunnel in
                     NavigationLink(tunnel.config.name, tag: tunnel.id, selection: $viewModel.selectedId) {
                         SSHTunnelDetailsView(tunnel: tunnel, updated: $updated)
+                    }
+                    .contextMenu {
+                        Button("Remove") {
+                            self.removeConfigFor(tunnel: tunnel)
+                        }
+                    }
+                    .contextMenu {
+                        Button("Duplicate") {
+                            self.duplicateConfigFor(tunnel: tunnel)
+                        }
                     }
                 }
             }
@@ -57,15 +78,13 @@ struct ContentView: View {
             }
             if splitted[0] == "removeAction" {
                 guard let id = UUID(uuidString: String(splitted[1])) else { return }
-                guard let index = self.viewModel.tunnels.firstIndex(where: { $0.id == id }) else { return }
-                self.viewModel.tunnels.remove(at: index)
+                guard let tunnel = self.viewModel.tunnels.first(where: { $0.id == id }) else { return }
+                self.removeConfigFor(tunnel: tunnel)
                 self.viewModel.selectedId = nil
             } else if splitted[0] == "duplicateAction" {
                 guard let id = UUID(uuidString: String(splitted[1])) else { return }
-                guard let index = self.viewModel.tunnels.firstIndex(where: { $0.id == id }) else { return }
-                let duplicatedConfig = SSHTunnelConfig.duplicate(from: self.viewModel.tunnels[index].config)
-                StorageService.saveConfig(config: duplicatedConfig)
-                self.viewModel.tunnels.append(SSHTunnel(config: duplicatedConfig))
+                guard let tunnel = self.viewModel.tunnels.first(where: { $0.id == id }) else { return }
+                self.duplicateConfigFor(tunnel: tunnel)
             }
             viewModel.objectWillChange.send()
         })
