@@ -50,17 +50,19 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach(viewModel.tunnels, id: \.self.taskId) { tunnel in
-                    NavigationLink(tunnel.config.name, tag: tunnel.id, selection: $viewModel.selectedId) {
+                    NavigationLink(tunnel.config.name) {
                         SSHTunnelDetailsView(tunnel: tunnel, updated: $updated)
                     }
                     .contextMenu {
-                        Button("Remove") {
-                            self.removeConfigFor(tunnel: tunnel)
-                        }
-                    }
-                    .contextMenu {
-                        Button("Duplicate") {
-                            self.duplicateConfigFor(tunnel: tunnel)
+                        VStack {
+                            Button("Duplicate") {
+                                self.duplicateConfigFor(tunnel: tunnel)
+                            }
+                            .disabled(true)
+                            Divider()
+                            Button("Remove") {
+                                self.removeConfigFor(tunnel: tunnel)
+                            }
                         }
                     }
                 }
