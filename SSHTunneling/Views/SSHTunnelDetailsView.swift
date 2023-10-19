@@ -44,8 +44,7 @@ struct SSHTunnelDetailsView: View {
                     Text("less secured")
                         .fontWeight(.light)
                 }
-                TextField("Password", text: $tunnel.config.password)
-                    .disabled(!passwordAuthentication)
+                SecureInputView("password", text: $tunnel.config.password, disabled: $passwordAuthentication)
             }
             Divider()
             HStack {
