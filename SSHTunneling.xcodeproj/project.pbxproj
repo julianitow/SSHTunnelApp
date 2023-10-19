@@ -13,6 +13,7 @@
 		EF4858882AC582980046BFB8 /* SSHTunnelConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4858872AC582980046BFB8 /* SSHTunnelConfig.swift */; };
 		EF48588B2AC585BB0046BFB8 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48588A2AC585BB0046BFB8 /* StorageService.swift */; };
 		EF48588D2AC5D13E0046BFB8 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48588C2AC5D13E0046BFB8 /* Notification.swift */; };
+		EF4DC9BD2AE1CFCE003CC9A6 /* SecureInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4DC9BC2AE1CFCE003CC9A6 /* SecureInputView.swift */; };
 		EF53F9FA2ABCD1430028352E /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF53F9F92ABCD1430028352E /* App.swift */; };
 		EF53F9FC2ABCD1430028352E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF53F9FB2ABCD1430028352E /* ContentView.swift */; };
 		EF53F9FE2ABCD1440028352E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF53F9FD2ABCD1440028352E /* Assets.xcassets */; };
@@ -32,6 +33,7 @@
 		EF4858872AC582980046BFB8 /* SSHTunnelConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTunnelConfig.swift; sourceTree = "<group>"; };
 		EF48588A2AC585BB0046BFB8 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		EF48588C2AC5D13E0046BFB8 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		EF4DC9BC2AE1CFCE003CC9A6 /* SecureInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInputView.swift; sourceTree = "<group>"; };
 		EF53F9F62ABCD1430028352E /* SSHTunneling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SSHTunneling.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF53F9F92ABCD1430028352E /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		EF53F9FB2ABCD1430028352E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				EF53F9FB2ABCD1430028352E /* ContentView.swift */,
 				EFC17CA62AC49CAF0072A58F /* AppMenu.swift */,
 				EF4858822AC5760D0046BFB8 /* SSHTunnelDetailsView.swift */,
+				EF4DC9BC2AE1CFCE003CC9A6 /* SecureInputView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				EF48588D2AC5D13E0046BFB8 /* Notification.swift in Sources */,
 				EFC17CA02AC495220072A58F /* SSHTunnelError.swift in Sources */,
 				EF4858832AC5760D0046BFB8 /* SSHTunnelDetailsView.swift in Sources */,
+				EF4DC9BD2AE1CFCE003CC9A6 /* SecureInputView.swift in Sources */,
 				EF2E791B2AC2D8E90084B2DA /* AppDelegate.swift in Sources */,
 				EFC17CA72AC49CAF0072A58F /* AppMenu.swift in Sources */,
 				EF53FA0B2ABCD2100028352E /* ShellService.swift in Sources */,

@@ -99,9 +99,6 @@ struct AppMenu: View {
                 self.refreshIcons()
             }
         })
-        .onAppear {
-            self.refreshIcons()
-        }
     }
     
 }
