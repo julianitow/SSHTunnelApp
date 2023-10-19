@@ -11,8 +11,9 @@ class SSHTunnel: Equatable, ObservableObject {
     
     public let id: UUID
     public var taskId: UUID
-    var config: SSHTunnelConfig
+    public var config: SSHTunnelConfig
     public var cmd: String?
+    public let fileManager = FileManager.default
         
     init(config: SSHTunnelConfig) {
         self.id = UUID()
@@ -23,6 +24,13 @@ class SSHTunnel: Equatable, ObservableObject {
             }
             var scriptPath = Bundle.main.bundlePath
             scriptPath.append("/Contents/Resources/expect_ssh_password_authent.sh")
+            if !fileManager.isExecutableFile(atPath: scriptPath) {
+                do {
+                    try fileManager.setAttributes([.posixPermissions: NSNumber(value: 0o755)], ofItemAtPath: scriptPath)
+                } catch {
+                    print("While chmod script : \(error)")
+                }
+            }
             self.cmd = "\(scriptPath) \(self.config.username) \(self.config.serverIP) \(self.config.distantPort) \(self.config.localPort) \(self.config.password)"
         } else {
             self.cmd = "ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort)"
