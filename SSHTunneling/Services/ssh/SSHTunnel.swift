@@ -7,8 +7,6 @@
 
 import Foundation
 
-//ssh ***REMOVED***@***REMOVED*** -Nf  -L 127.0.0.1:27018:127.0.0.1:27017
-
 class SSHTunnel: Equatable, ObservableObject {
     
     public let id: UUID
@@ -20,10 +18,12 @@ class SSHTunnel: Equatable, ObservableObject {
         self.id = UUID()
         self.config = config
         if config.usePassword {
-            if config.password.contains("$") && !config.password.contains("\\$") {
-                config.password = config.password.replacingOccurrences(of: "$", with: "\\$")
+            if config.password.contains("$"){
+                self.config.password = config.password.replacingOccurrences(of: "$", with: "\\\\$")
             }
-            self.cmd = "/usr/bin/expect -c 'spawn ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort) ; expect { -re \"password:\" {send \"\(config.password)\n\"} } ;  expect eof ; catch wait result; exit [lindex $result 3]'"
+            var scriptPath = Bundle.main.bundlePath
+            scriptPath.append("/Contents/Resources/expect_ssh_password_authent.sh")
+            self.cmd = "\(scriptPath) \(self.config.username) \(self.config.serverIP) \(self.config.distantPort) \(self.config.localPort) \(self.config.password)"
         } else {
             self.cmd = "ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort)"
         }
@@ -38,11 +38,15 @@ class SSHTunnel: Equatable, ObservableObject {
     }
     
     func setCommand() -> Void {
+        print("CONNECT CALLED")
         if self.config.usePassword {
-            if config.password.contains("$") && !config.password.contains("\\$") {
-                config.password = config.password.replacingOccurrences(of: "$", with: "\\$")
+            if (self.config.password.contains("$") && !self.config.password.contains("\\$")){
+                self.config.password = config.password.replacingOccurrences(of: "$", with: "\\\\$")
             }
-            self.cmd = "/usr/bin/expect -c 'spawn ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort) ; expect { -re \"password:\" {send \"\(config.password)\n\"} } ;  expect eof ; catch wait result; exit [lindex $result 3]'"
+            print(self.config.password)
+            var scriptPath = Bundle.main.bundlePath
+            scriptPath.append("/Contents/Resources/expect_ssh_password_authent.sh")
+            self.cmd = "\(scriptPath) \(self.config.username) \(self.config.serverIP) \(self.config.distantPort) \(self.config.localPort) \(self.config.password)"
         } else {
             self.cmd = "ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort)"
         }

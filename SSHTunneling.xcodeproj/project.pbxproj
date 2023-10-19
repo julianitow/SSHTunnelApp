@@ -19,6 +19,7 @@
 		EF53FA012ABCD1440028352E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF53FA002ABCD1440028352E /* Preview Assets.xcassets */; };
 		EF53FA0B2ABCD2100028352E /* ShellService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF53FA0A2ABCD2100028352E /* ShellService.swift */; };
 		EF7ED6272AC0587600A1FBAB /* SSHTunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7ED6262AC0587600A1FBAB /* SSHTunnel.swift */; };
+		EFACDF412ACDA24A0056AEF6 /* expect_ssh_password_authent.sh in Resources */ = {isa = PBXBuildFile; fileRef = EFACDF3D2ACD9F980056AEF6 /* expect_ssh_password_authent.sh */; };
 		EFC17CA02AC495220072A58F /* SSHTunnelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC17C9F2AC495220072A58F /* SSHTunnelError.swift */; };
 		EFC17CA32AC495400072A58F /* SSHTunnelErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC17CA22AC495400072A58F /* SSHTunnelErrorExtension.swift */; };
 		EFC17CA72AC49CAF0072A58F /* AppMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC17CA62AC49CAF0072A58F /* AppMenu.swift */; };
@@ -40,6 +41,8 @@
 		EF53FA0A2ABCD2100028352E /* ShellService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellService.swift; sourceTree = "<group>"; };
 		EF7ED6262AC0587600A1FBAB /* SSHTunnel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTunnel.swift; sourceTree = "<group>"; };
 		EF7ED62A2AC0651300A1FBAB /* SSHTunneling.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SSHTunneling.entitlements; sourceTree = "<group>"; };
+		EFACDF3D2ACD9F980056AEF6 /* expect_ssh_password_authent.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = expect_ssh_password_authent.sh; sourceTree = "<group>"; };
+		EFACDF402ACDA1EE0056AEF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		EFC17C9F2AC495220072A58F /* SSHTunnelError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTunnelError.swift; sourceTree = "<group>"; };
 		EFC17CA22AC495400072A58F /* SSHTunnelErrorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTunnelErrorExtension.swift; sourceTree = "<group>"; };
 		EFC17CA62AC49CAF0072A58F /* AppMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMenu.swift; sourceTree = "<group>"; };
@@ -79,6 +82,7 @@
 				EF7ED62A2AC0651300A1FBAB /* SSHTunneling.entitlements */,
 				EF53F9F82ABCD1430028352E /* SSHTunneling */,
 				EF53F9F72ABCD1430028352E /* Products */,
+				EFACDF3F2ACDA1C30056AEF6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -93,6 +97,7 @@
 		EF53F9F82ABCD1430028352E /* SSHTunneling */ = {
 			isa = PBXGroup;
 			children = (
+				EFACDF402ACDA1EE0056AEF6 /* Info.plist */,
 				EF4858842AC5766C0046BFB8 /* Models */,
 				EFC17CA52AC495A80072A58F /* Views */,
 				EFC17CA12AC4952F0072A58F /* Extensions */,
@@ -103,6 +108,7 @@
 				EF53F9FD2ABCD1440028352E /* Assets.xcassets */,
 				EF53FA022ABCD1440028352E /* SSHTunneling.entitlements */,
 				EF53F9FF2ABCD1440028352E /* Preview Content */,
+				EFACDF3D2ACD9F980056AEF6 /* expect_ssh_password_authent.sh */,
 			);
 			path = SSHTunneling;
 			sourceTree = "<group>";
@@ -131,6 +137,13 @@
 				EF53FA0A2ABCD2100028352E /* ShellService.swift */,
 			);
 			path = shell;
+			sourceTree = "<group>";
+		};
+		EFACDF3F2ACDA1C30056AEF6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		EFC17C9E2AC495120072A58F /* Enums */ = {
@@ -195,6 +208,9 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				KnownAssetTags = (
+					New,
+				);
 				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
@@ -226,6 +242,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFACDF412ACDA24A0056AEF6 /* expect_ssh_password_authent.sh in Resources */,
 				EF53FA012ABCD1440028352E /* Preview Assets.xcassets in Resources */,
 				EF53F9FE2ABCD1440028352E /* Assets.xcassets in Resources */,
 			);
@@ -384,6 +401,7 @@
 				DEVELOPMENT_TEAM = 8Y746A2BHG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SSHTunneling/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -411,6 +429,7 @@
 				DEVELOPMENT_TEAM = 8Y746A2BHG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SSHTunneling/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class SSHTunnelConfig: Codable, Equatable, ObservableObject {
+class SSHTunnelConfig: Codable, Equatable, ObservableObject, CustomStringConvertible {
     
     public var id: UUID
     public var name: String
@@ -18,6 +18,10 @@ class SSHTunnelConfig: Codable, Equatable, ObservableObject {
     public var username: String
     public var usePassword: Bool
     public var password: String = ""
+    
+    public var description: String {
+        return " ################\n id: \(id)\n name: \(self.name)\n serverIP: \(self.serverIP)\n toIp: \(self.toIP)\n localPort: \(localPort)\n distantPort: \(self.distantPort)\n username: \(self.username)\n usePassword: \(self.usePassword)"
+    }
     
     init(name: String, username: String, serverIP: String, to: String, localPort: Int, distantPort: Int) {
         self.id = UUID()
