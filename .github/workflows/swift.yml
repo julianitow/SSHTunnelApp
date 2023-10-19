@@ -1,0 +1,51 @@
+name: Build macOS App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set Up Xcode
+      uses: actions/setup-xcode@v2
+      with:
+        xcode-version: '15'
+
+    - name: Build Project
+      run: |
+        xcodebuild -project SSHTunneling.xcodeproj -scheme SSHTunneling -destination "platform=macOS" build
+
+    - name: Archive Project
+      run: |
+        xcodebuild -project SSHTunneling.xcodeproj -scheme SSHTunneling -destination "platform=macOS" archive -archivePath build/YourApp.xcarchive
+
+    - name: Create macOS App
+      run: |
+        xcodebuild -exportArchive -archivePath build/SSHTunneling.xcarchive -exportPath build
+
+    - name: Upload macOS App
+      uses: actions/upload-artifact@v2
+      with:
+        name: YourApp
+        path: build/SSHTunneling.app
+
+    - name: Post Build Cleanup
+      run: |
+        rm -rf build
+
+    - name: Save Build Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: artifacts
+        path: ${{ runner.workspace }}/build
+

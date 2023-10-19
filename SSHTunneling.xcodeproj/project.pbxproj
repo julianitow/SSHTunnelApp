@@ -34,6 +34,7 @@
 		EF48588A2AC585BB0046BFB8 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		EF48588C2AC5D13E0046BFB8 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		EF4DC9BC2AE1CFCE003CC9A6 /* SecureInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInputView.swift; sourceTree = "<group>"; };
+		EF4DC9BE2AE1DE9B003CC9A6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		EF53F9F62ABCD1430028352E /* SSHTunneling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SSHTunneling.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF53F9F92ABCD1430028352E /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		EF53F9FB2ABCD1430028352E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -81,6 +82,7 @@
 		EF53F9ED2ABCD1430028352E = {
 			isa = PBXGroup;
 			children = (
+				EF4DC9BE2AE1DE9B003CC9A6 /* README.md */,
 				EF7ED62A2AC0651300A1FBAB /* SSHTunneling.entitlements */,
 				EF53F9F82ABCD1430028352E /* SSHTunneling */,
 				EF53F9F72ABCD1430028352E /* Products */,
