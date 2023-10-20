@@ -12,6 +12,10 @@ env:
 jobs:
   build:
     runs-on: macos-latest
+    strategy:
+      matrix:
+        xcode:
+          - ^15
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -24,6 +28,7 @@ jobs:
         uses: mxcl/xcodebuild@v2
         with:
           action: none
+          xcode: ${{ matrix.xcode }}
       - run: xcodebuild -project SSHTunneling.xcodeproj -scheme SSHTunneling -destination platform=macOS build -configuration Release -derivedDataPath dist | xcpretty --color # NEED TO ZIP FILE TO PUBLISH ARTIFACT WORK
       - run: mv dist/Build/Products/Release/SSHTunneling.app ./ && zip -X ${{ env.ARTIFACT_NAME }} SSHTunneling.app/
       - name: Upload artifact
