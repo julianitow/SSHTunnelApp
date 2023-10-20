@@ -19,7 +19,6 @@ struct ContentView: View {
         do {
             let configs = try StorageService.getConfigs()
             for config in configs {
-                print(config)
                 self.SSHTunnels.append(SSHTunnel(config: config))
             }
         } catch {

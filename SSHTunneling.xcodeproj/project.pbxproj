@@ -14,6 +14,7 @@
 		EF48588B2AC585BB0046BFB8 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48588A2AC585BB0046BFB8 /* StorageService.swift */; };
 		EF48588D2AC5D13E0046BFB8 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48588C2AC5D13E0046BFB8 /* Notification.swift */; };
 		EF4DC9BD2AE1CFCE003CC9A6 /* SecureInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4DC9BC2AE1CFCE003CC9A6 /* SecureInputView.swift */; };
+		EF4DC9C12AE2A14B003CC9A6 /* versionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4DC9C02AE2A14B003CC9A6 /* versionService.swift */; };
 		EF53F9FA2ABCD1430028352E /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF53F9F92ABCD1430028352E /* App.swift */; };
 		EF53F9FC2ABCD1430028352E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF53F9FB2ABCD1430028352E /* ContentView.swift */; };
 		EF53F9FE2ABCD1440028352E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF53F9FD2ABCD1440028352E /* Assets.xcassets */; };
@@ -35,6 +36,7 @@
 		EF48588C2AC5D13E0046BFB8 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		EF4DC9BC2AE1CFCE003CC9A6 /* SecureInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInputView.swift; sourceTree = "<group>"; };
 		EF4DC9BE2AE1DE9B003CC9A6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		EF4DC9C02AE2A14B003CC9A6 /* versionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = versionService.swift; sourceTree = "<group>"; };
 		EF53F9F62ABCD1430028352E /* SSHTunneling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SSHTunneling.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF53F9F92ABCD1430028352E /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		EF53F9FB2ABCD1430028352E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -77,6 +79,14 @@
 				EF48588A2AC585BB0046BFB8 /* StorageService.swift */,
 			);
 			path = storage;
+			sourceTree = "<group>";
+		};
+		EF4DC9BF2AE2A13B003CC9A6 /* version */ = {
+			isa = PBXGroup;
+			children = (
+				EF4DC9C02AE2A14B003CC9A6 /* versionService.swift */,
+			);
+			path = version;
 			sourceTree = "<group>";
 		};
 		EF53F9ED2ABCD1430028352E = {
@@ -128,6 +138,7 @@
 		EF53FA082ABCD1D30028352E /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				EF4DC9BF2AE2A13B003CC9A6 /* version */,
 				EF4858892AC585AB0046BFB8 /* storage */,
 				EFC17CA42AC495820072A58F /* ssh */,
 				EF53FA092ABCD1E70028352E /* shell */,
@@ -264,6 +275,7 @@
 				EF48588B2AC585BB0046BFB8 /* StorageService.swift in Sources */,
 				EF53F9FC2ABCD1430028352E /* ContentView.swift in Sources */,
 				EF53F9FA2ABCD1430028352E /* App.swift in Sources */,
+				EF4DC9C12AE2A14B003CC9A6 /* versionService.swift in Sources */,
 				EF7ED6272AC0587600A1FBAB /* SSHTunnel.swift in Sources */,
 				EF4858862AC5767A0046BFB8 /* SSHTunnelsViewModel.swift in Sources */,
 				EFC17CA32AC495400072A58F /* SSHTunnelErrorExtension.swift in Sources */,
