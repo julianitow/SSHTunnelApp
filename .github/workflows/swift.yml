@@ -55,6 +55,7 @@ jobs:
         with:
           bump_version_scheme: minor
           release_name: reellize
+          max_commits: 3
       - name: DEBUG OUTPUT
         run: ls -la /home/runner/work/SSHTunneling/SSHTunneling
       - name: Upload Release Asset
