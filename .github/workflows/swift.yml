@@ -24,8 +24,8 @@ jobs:
         uses: mxcl/xcodebuild@v2
         with:
           action: none
-      - run: xcodebuild -project ethernet-status.xcodeproj -scheme ethernet-status -destination platform=macOS build -configuration Release -derivedDataPath dist | xcpretty --color # NEED TO ZIP FILE TO PUBLISH ARTIFACT WORK
-      - run: mv dist/Build/Products/Release/ethernet-status.app ./ && zip -X ${{ env.ARTIFACT_NAME }} ethernet-status.app/
+      - run: xcodebuild -project SSHTunneling.xcodeproj -scheme SSHTunneling -destination platform=macOS build -configuration Release -derivedDataPath dist | xcpretty --color # NEED TO ZIP FILE TO PUBLISH ARTIFACT WORK
+      - run: mv dist/Build/Products/Release/SSHTunneling.app ./ && zip -X ${{ env.ARTIFACT_NAME }} SSHTunneling.app/
       - name: Upload artifact
         if: ${{ success() }}
         uses: actions/upload-artifact@v2
@@ -51,7 +51,7 @@ jobs:
           bump_version_scheme: patch
           release_name: reellize
       - name: DEBUG OUTPUT
-        run: ls -la /home/runner/work/ethernet-status/ethernet-status
+        run: ls -la /home/runner/work/SSHTunneling/SSHTunneling
       - name: Upload Release Asset
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
