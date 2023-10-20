@@ -18,7 +18,7 @@ The application is developed in Swift for macOS, providing a user-friendly inter
 
 ## Installation
 
-1. Download the latest version of the application from [releases](https://github.com/julianitow/SSHTunnelApp).
+1. Download the latest version of the application from [releases](https://github.com/julianitow/SSHTunnelApp/releases).
 2. Double-click the .dmg file to mount the application volume.
 3. Drag and drop the application into the Applications folder.
 
