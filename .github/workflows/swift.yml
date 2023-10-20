@@ -1,51 +1,64 @@
-name: Build macOS App
+name: Swift
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - main
+    branches: [ "main" ]
+
+env:
+  ARTIFACT_NAME: SSHTunneling.app.zip
 
 jobs:
   build:
     runs-on: macos-latest
-
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install the Apple certificate and provisioning profile 
+        uses: apple-actions/import-codesign-certs@v2
+        with: 
+          p12-file-base64: ${{ secrets.CERTIFICATE_P12 }}
+          p12-password: ${{ secrets.PASSWORD_CERT }}
+      - name: Build application
+        uses: mxcl/xcodebuild@v2
+        with:
+          action: none
+      - run: xcodebuild -project ethernet-status.xcodeproj -scheme ethernet-status -destination platform=macOS build -configuration Release -derivedDataPath dist | xcpretty --color # NEED TO ZIP FILE TO PUBLISH ARTIFACT WORK
+      - run: mv dist/Build/Products/Release/ethernet-status.app ./ && zip -X ${{ env.ARTIFACT_NAME }} ethernet-status.app/
+      - name: Upload artifact
+        if: ${{ success() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.ARTIFACT_NAME }}
 
-    - name: Set Up Xcode
-      uses: actions/setup-xcode@v2
-      with:
-        xcode-version: '15'
-
-    - name: Build Project
-      run: |
-        xcodebuild -project SSHTunneling.xcodeproj -scheme SSHTunneling -destination "platform=macOS" build
-
-    - name: Archive Project
-      run: |
-        xcodebuild -project SSHTunneling.xcodeproj -scheme SSHTunneling -destination "platform=macOS" archive -archivePath build/YourApp.xcarchive
-
-    - name: Create macOS App
-      run: |
-        xcodebuild -exportArchive -archivePath build/SSHTunneling.xcarchive -exportPath build
-
-    - name: Upload macOS App
-      uses: actions/upload-artifact@v2
-      with:
-        name: YourApp
-        path: build/SSHTunneling.app
-
-    - name: Post Build Cleanup
-      run: |
-        rm -rf build
-
-    - name: Save Build Artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: artifacts
-        path: ${{ runner.workspace }}/build
-
+  release:
+      runs-on: ubuntu-latest
+      needs: build
+      steps:
+      - name: Download generated artifact
+        id: download_artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+      - name: Publish release
+        id: publish_release
+        uses: DasBen/release-on-push-action@master ## insteand of official repo: rymndhng/release-on-push-action because of PR:https://github.com/rymndhng/release-on-push-action/pull/88
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          bump_version_scheme: patch
+          release_name: reellize
+      - name: DEBUG OUTPUT
+        run: ls -la /home/runner/work/ethernet-status/ethernet-status
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.publish_release.outputs.upload_url }}
+          asset_path: ${{steps.download_artifact.outputs.download-path}}/${{ env.ARTIFACT_NAME }}
+          asset_name: ${{ env.ARTIFACT_NAME }}
+          asset_content_type: application/zip
