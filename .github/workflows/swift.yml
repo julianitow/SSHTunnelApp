@@ -49,11 +49,11 @@ jobs:
           name: ${{ env.ARTIFACT_NAME }}
       - name: Publish release
         id: publish_release
-        uses: DasBen/release-on-push-action@master ## insteand of official repo: rymndhng/release-on-push-action because of PR:https://github.com/rymndhng/release-on-push-action/pull/88
+        uses: DasBen/release-on-push-action@master ## instead of official repo: rymndhng/release-on-push-action because of PR:https://github.com/rymndhng/release-on-push-action/pull/88
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          bump_version_scheme: patch
+          bump_version_scheme: minor
           release_name: reellize
       - name: DEBUG OUTPUT
         run: ls -la /home/runner/work/SSHTunneling/SSHTunneling
