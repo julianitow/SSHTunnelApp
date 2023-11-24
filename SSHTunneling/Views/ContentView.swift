@@ -21,7 +21,6 @@ struct ContentView: View {
         do {
             let configs = try StorageService.getConfigs()
             self._SSHTunnels = State(initialValue: configs.map { SSHTunnel(config: $0) })
-            print(self.SSHTunnels.isEmpty)
         } catch {
             print("\(error)")
         }

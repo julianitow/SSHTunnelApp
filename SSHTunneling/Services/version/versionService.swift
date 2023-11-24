@@ -7,7 +7,7 @@
 
 import Foundation
 
-let GITHUB_TOKEN = "Bearer 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"
+let GITHUB_TOKEN = "Bearer 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"
 let BASE_URL = "https://api.github.com/repos/julianitow/SSHTunnelApp/git/"
 let REPO_URL = "https://github.com/julianitow/SSHTunnelApp/releases"
 
@@ -45,7 +45,7 @@ class VersionService {
     
     static let tagsListUrl = URL(string: "\(BASE_URL)refs/tags");
     static var latestTag: TAG? = nil
-    static var currentTag = TAG(ref: "/v0.1.5", url: "")
+    static var currentTag = TAG(ref: "/v0.1.7", url: "")
 
     static func fetchLatestTag(_ callback: @escaping(Bool) -> Void) -> Void {
         var urlRequest = URLRequest(url: tagsListUrl!)
@@ -71,6 +71,8 @@ class VersionService {
                 } catch let error {
                     print("Decoding error: \(error)")
                 }
+            } else {
+                print("NOT 200", response.statusCode)
             }
         }
         dataTask.resume()

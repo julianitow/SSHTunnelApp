@@ -32,6 +32,9 @@ struct SSHTunnelingApp: App {
                 .environmentObject(viewModel)
                 .onAppear {
                     self.appDelegate.SSHTunnels = self.contentView.SSHTunnels
+                    VersionService.fetchLatestTag { updateAvailable in
+                        self.updateAvailable = updateAvailable
+                    }
                 }
                 .alert("New update", isPresented: $updateAvailable) {
                     Button("Later", role: .cancel) {
