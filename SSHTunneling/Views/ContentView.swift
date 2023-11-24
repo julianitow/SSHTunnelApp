@@ -15,37 +15,28 @@ struct ContentView: View {
     @State var newConfigForm: Bool = false
     @StateObject var newTunnel: SSHTunnel = SSHTunnel()
     
-    var SSHTunnels: [SSHTunnel] = []
+    @State var SSHTunnels: [SSHTunnel] = []
     
-    mutating func createTunnels() {
+    init() {
         do {
             let configs = try StorageService.getConfigs()
-            for config in configs {
-                self.SSHTunnels.append(SSHTunnel(config: config))
-            }
+            self._SSHTunnels = State(initialValue: configs.map { SSHTunnel(config: $0) })
+            print(self.SSHTunnels.isEmpty)
         } catch {
             print("\(error)")
         }
     }
     
-    init() {
-        self.createTunnels()
-    }
-    
-    mutating func newConfig() -> Void {
-        self.SSHTunnels.append(SSHTunnel())
-    }
-    
     func removeConfigFor(tunnel: SSHTunnel) -> Void {
         guard let index = self.viewModel.tunnels.firstIndex(where: { $0.id == tunnel.id }) else { return }
-        self.viewModel.tunnels.remove(at: index)
+        self.viewModel.removeTunnel(at: index)
         StorageService.removeConfig(config: tunnel.config)
     }
     
     func duplicateConfigFor(tunnel: SSHTunnel) -> Void {
         let duplicatedConfig = SSHTunnelConfig.duplicate(from: tunnel.config)
         StorageService.saveConfig(config: duplicatedConfig)
-        self.viewModel.tunnels.append(SSHTunnel(config: duplicatedConfig))
+        self.viewModel.newTunnel(SSHTunnel(config: duplicatedConfig))
     }
     
     var body: some View {
@@ -93,7 +84,7 @@ struct ContentView: View {
             StorageService.erase()
         })
         .onAppear() {
-            self.viewModel.tunnels = self.SSHTunnels
+            self.viewModel.newTunnels(tunnels: SSHTunnels)
         }
     }
 }

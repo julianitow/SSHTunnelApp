@@ -17,11 +17,13 @@ struct SSHTunnelingApp: App {
     @State var updateAvailable: Bool = false
     
     var contentView: ContentView
+    var appMenu: AppMenu
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
     init() {
         VersionService.fetchLatestTag()
         self.contentView = ContentView()
+        self.appMenu = AppMenu()
     }
     
 
@@ -44,8 +46,7 @@ struct SSHTunnelingApp: App {
         .commands {
             CommandGroup(replacing: .newItem) {
                 Button("New tunnel") {
-                    NotificationCenter.default.post(name: Notification.Name.newNotification, object: "")
-                    viewModel.objectWillChange.send()
+                    viewModel.newTunnel()
                 }
                 Divider()
                 Button("Reset configs") {
@@ -93,7 +94,7 @@ struct SSHTunnelingApp: App {
             }
         }
         MenuBarExtra("SSH Tunneling", systemImage: "rectangle.connected.to.line.below") {
-            AppMenu(tunnels: self.contentView.SSHTunnels)
+            self.appMenu
                 .environmentObject(viewModel)
         }
         .menuBarExtraStyle(.menu)
