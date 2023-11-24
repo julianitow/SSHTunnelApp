@@ -7,7 +7,7 @@
 
 import Foundation
 
-let GITHUB_TOKEN = "Bearer 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"
+let GITHUB_TOKEN = "Bearer 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"
 let BASE_URL = "https://api.github.com/repos/julianitow/SSHTunnelApp/git/"
 let REPO_URL = "https://github.com/julianitow/SSHTunnelApp/releases"
 
@@ -47,14 +47,11 @@ class VersionService {
     static var latestTag: TAG? = nil
     static var currentTag = TAG(ref: "/v0.1.5", url: "")
 
-    static func fetchLatestTag() -> Void {
+    static func fetchLatestTag(_ callback: @escaping(Bool) -> Void) -> Void {
         var urlRequest = URLRequest(url: tagsListUrl!)
         urlRequest.addValue(GITHUB_TOKEN, forHTTPHeaderField: "Authorization")
         urlRequest.addValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
         urlRequest.addValue("2022-11-28", forHTTPHeaderField: "X-GitHub-Api-Version")
-        
-        var latestTag: TAG? = nil
-        
         let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
             if let error = error {
                 print("Request error: ", error)
@@ -64,12 +61,13 @@ class VersionService {
             if response.statusCode == 200 {
                 guard let data = data else { return }
                 do {
+                    var latestTag: TAG = currentTag
                     let decodedTags = try JSONDecoder().decode([TAG].self, from: data)
                     for i in 0..<decodedTags.count - 1 {
                         latestTag = decodedTags[i].compare(to: decodedTags[i + 1])
                     }
                     VersionService.latestTag = latestTag
-                    
+                    callback(!isLatest())
                 } catch let error {
                     print("Decoding error: \(error)")
                 }

@@ -21,7 +21,6 @@ struct SSHTunnelingApp: App {
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
     init() {
-        VersionService.fetchLatestTag()
         self.contentView = ContentView()
         self.appMenu = AppMenu()
     }
@@ -49,6 +48,12 @@ struct SSHTunnelingApp: App {
                     viewModel.newTunnel()
                 }
                 Divider()
+                Button("Check for update") {
+                    VersionService.fetchLatestTag { updateAvailable in
+                        self.updateAvailable = updateAvailable
+                    }
+                }
+                Divider()
                 Button("Reset configs") {
                     NotificationCenter.default.post(name: Notification.Name.resetNotification, object: "resetConfig")
                 }
@@ -66,11 +71,7 @@ struct SSHTunnelingApp: App {
                 EmptyView()
             }
             CommandGroup(replacing: .help) {
-                Button("Check for update") {
-                    if !VersionService.isLatest() {
-                        self.updateAvailable = true
-                    }
-                }
+                EmptyView()
             }
             CommandGroup(replacing: .appInfo) {
                 Button("About SSHTunnelApp") {
