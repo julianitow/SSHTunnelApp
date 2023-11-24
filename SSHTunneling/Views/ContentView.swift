@@ -12,6 +12,8 @@ struct ContentView: View {
     @State var exitCode: Int32 = 0
     @EnvironmentObject var viewModel: SSHTunnelsViewModel
     @State var updated: Bool = false
+    @State var newConfigForm: Bool = false
+    @StateObject var newTunnel: SSHTunnel = SSHTunnel()
     
     var SSHTunnels: [SSHTunnel] = []
     
@@ -70,9 +72,6 @@ struct ContentView: View {
             .listStyle(.sidebar)
             Text("No selection")
         }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name.newNotification), perform: { _ in
-            self.viewModel.tunnels.append(SSHTunnel())
-        })
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.updateNotification), perform: { data in
             let action = data.object as? String
             guard let splitted = action?.split(separator: ":") else {

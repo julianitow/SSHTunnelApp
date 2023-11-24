@@ -45,6 +45,7 @@ struct SSHTunnelingApp: App {
             CommandGroup(replacing: .newItem) {
                 Button("New tunnel") {
                     NotificationCenter.default.post(name: Notification.Name.newNotification, object: "")
+                    viewModel.objectWillChange.send()
                 }
                 Divider()
                 Button("Reset configs") {

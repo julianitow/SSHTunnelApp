@@ -88,6 +88,7 @@ struct AppMenu: View {
             openMainWindow()
         })
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.newNotification), perform: { data in
+            viewModel.tunnels.append(SSHTunnel())
             self.btnIcons.append("circle.dotted")
         })
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.updateNotification), perform: { data in
