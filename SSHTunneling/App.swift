@@ -80,8 +80,8 @@ struct SSHTunnelingApp: App {
                 Button("About SSHTunnelApp") {
                 NSApplication.shared.orderFrontStandardAboutPanel(
                         options: [
-                            NSApplication.AboutPanelOptionKey.applicationVersion: "Version: \(VersionService.latestTag!.ref.split(separator: "/").last!)",
-                            NSApplication.AboutPanelOptionKey.version: VersionService.latestTag!.ref.split(separator: "/").last!,
+                            NSApplication.AboutPanelOptionKey.applicationVersion: "Version: \(VersionService.latestTag?.ref.split(separator: "/").last! ?? "")" ,
+                            NSApplication.AboutPanelOptionKey.version: VersionService.latestTag?.ref.split(separator: "/").last! ?? "",
                             NSApplication.AboutPanelOptionKey.credits: NSAttributedString(
                                 string: "Julianitow Development Corporation",
                                 attributes: [
