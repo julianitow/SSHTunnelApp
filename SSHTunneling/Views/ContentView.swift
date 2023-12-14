@@ -50,7 +50,6 @@ struct ContentView: View {
                             Button("Duplicate") {
                                 self.duplicateConfigFor(tunnel: tunnel)
                             }
-                            .disabled(true)
                             Divider()
                             Button("Remove") {
                                 self.removeConfigFor(tunnel: tunnel)
