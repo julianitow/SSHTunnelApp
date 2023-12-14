@@ -54,7 +54,7 @@ struct AppMenu: View {
             let id = data.object as? UUID
             guard let index = viewModel.tunnels.firstIndex(where: { $0.taskId == id }) else { return }
             guard let task = ShellService.tasks.first(where: {$0.id == viewModel.tunnels[index].taskId}) else { return }
-            if !viewModel.tunnels[index].config.usePassword && task.exitCode != 130 && task.exitCode != 0 {
+            if task.exitCode != 130 && task.exitCode != 0 {
                 viewModel.icons[index] = "exclamationmark.triangle"
                 openMainWindow()
             }
