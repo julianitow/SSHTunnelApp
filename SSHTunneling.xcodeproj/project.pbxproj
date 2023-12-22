@@ -14,13 +14,14 @@
 		EF48588B2AC585BB0046BFB8 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48588A2AC585BB0046BFB8 /* StorageService.swift */; };
 		EF48588D2AC5D13E0046BFB8 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48588C2AC5D13E0046BFB8 /* Notification.swift */; };
 		EF4DC9BD2AE1CFCE003CC9A6 /* SecureInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4DC9BC2AE1CFCE003CC9A6 /* SecureInputView.swift */; };
-		EF4DC9C12AE2A14B003CC9A6 /* versionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4DC9C02AE2A14B003CC9A6 /* versionService.swift */; };
+		EF4DC9C12AE2A14B003CC9A6 /* VersionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4DC9C02AE2A14B003CC9A6 /* VersionService.swift */; };
 		EF53F9FA2ABCD1430028352E /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF53F9F92ABCD1430028352E /* App.swift */; };
 		EF53F9FC2ABCD1430028352E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF53F9FB2ABCD1430028352E /* ContentView.swift */; };
 		EF53F9FE2ABCD1440028352E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF53F9FD2ABCD1440028352E /* Assets.xcassets */; };
 		EF53FA012ABCD1440028352E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF53FA002ABCD1440028352E /* Preview Assets.xcassets */; };
 		EF53FA0B2ABCD2100028352E /* ShellService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF53FA0A2ABCD2100028352E /* ShellService.swift */; };
 		EF7ED6272AC0587600A1FBAB /* SSHTunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7ED6262AC0587600A1FBAB /* SSHTunnel.swift */; };
+		EF921F952B34FCCB00AD33CE /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF921F942B34FCCB00AD33CE /* NotificationService.swift */; };
 		EFACDF412ACDA24A0056AEF6 /* expect_ssh_password_authent.sh in Resources */ = {isa = PBXBuildFile; fileRef = EFACDF3D2ACD9F980056AEF6 /* expect_ssh_password_authent.sh */; };
 		EFC17CA02AC495220072A58F /* SSHTunnelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC17C9F2AC495220072A58F /* SSHTunnelError.swift */; };
 		EFC17CA32AC495400072A58F /* SSHTunnelErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC17CA22AC495400072A58F /* SSHTunnelErrorExtension.swift */; };
@@ -36,7 +37,7 @@
 		EF48588C2AC5D13E0046BFB8 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		EF4DC9BC2AE1CFCE003CC9A6 /* SecureInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInputView.swift; sourceTree = "<group>"; };
 		EF4DC9BE2AE1DE9B003CC9A6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		EF4DC9C02AE2A14B003CC9A6 /* versionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = versionService.swift; sourceTree = "<group>"; };
+		EF4DC9C02AE2A14B003CC9A6 /* VersionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionService.swift; sourceTree = "<group>"; };
 		EF53F9F62ABCD1430028352E /* SSHTunneling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SSHTunneling.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF53F9F92ABCD1430028352E /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		EF53F9FB2ABCD1430028352E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -46,6 +47,7 @@
 		EF53FA0A2ABCD2100028352E /* ShellService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellService.swift; sourceTree = "<group>"; };
 		EF7ED6262AC0587600A1FBAB /* SSHTunnel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTunnel.swift; sourceTree = "<group>"; };
 		EF7ED62A2AC0651300A1FBAB /* SSHTunneling.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SSHTunneling.entitlements; sourceTree = "<group>"; };
+		EF921F942B34FCCB00AD33CE /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		EFACDF3D2ACD9F980056AEF6 /* expect_ssh_password_authent.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = expect_ssh_password_authent.sh; sourceTree = "<group>"; };
 		EFACDF402ACDA1EE0056AEF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		EFC17C9F2AC495220072A58F /* SSHTunnelError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTunnelError.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 			children = (
 				EF4858852AC5767A0046BFB8 /* SSHTunnelsViewModel.swift */,
 				EF4858872AC582980046BFB8 /* SSHTunnelConfig.swift */,
+				EF7ED6262AC0587600A1FBAB /* SSHTunnel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -84,7 +87,7 @@
 		EF4DC9BF2AE2A13B003CC9A6 /* version */ = {
 			isa = PBXGroup;
 			children = (
-				EF4DC9C02AE2A14B003CC9A6 /* versionService.swift */,
+				EF4DC9C02AE2A14B003CC9A6 /* VersionService.swift */,
 			);
 			path = version;
 			sourceTree = "<group>";
@@ -138,9 +141,9 @@
 		EF53FA082ABCD1D30028352E /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				EF921F932B34FCB600AD33CE /* notification */,
 				EF4DC9BF2AE2A13B003CC9A6 /* version */,
 				EF4858892AC585AB0046BFB8 /* storage */,
-				EFC17CA42AC495820072A58F /* ssh */,
 				EF53FA092ABCD1E70028352E /* shell */,
 			);
 			path = Services;
@@ -152,6 +155,14 @@
 				EF53FA0A2ABCD2100028352E /* ShellService.swift */,
 			);
 			path = shell;
+			sourceTree = "<group>";
+		};
+		EF921F932B34FCB600AD33CE /* notification */ = {
+			isa = PBXGroup;
+			children = (
+				EF921F942B34FCCB00AD33CE /* NotificationService.swift */,
+			);
+			path = notification;
 			sourceTree = "<group>";
 		};
 		EFACDF3F2ACDA1C30056AEF6 /* Frameworks */ = {
@@ -176,14 +187,6 @@
 				EF48588C2AC5D13E0046BFB8 /* Notification.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		EFC17CA42AC495820072A58F /* ssh */ = {
-			isa = PBXGroup;
-			children = (
-				EF7ED6262AC0587600A1FBAB /* SSHTunnel.swift */,
-			);
-			path = ssh;
 			sourceTree = "<group>";
 		};
 		EFC17CA52AC495A80072A58F /* Views */ = {
@@ -275,7 +278,7 @@
 				EF48588B2AC585BB0046BFB8 /* StorageService.swift in Sources */,
 				EF53F9FC2ABCD1430028352E /* ContentView.swift in Sources */,
 				EF53F9FA2ABCD1430028352E /* App.swift in Sources */,
-				EF4DC9C12AE2A14B003CC9A6 /* versionService.swift in Sources */,
+				EF4DC9C12AE2A14B003CC9A6 /* VersionService.swift in Sources */,
 				EF7ED6272AC0587600A1FBAB /* SSHTunnel.swift in Sources */,
 				EF4858862AC5767A0046BFB8 /* SSHTunnelsViewModel.swift in Sources */,
 				EFC17CA32AC495400072A58F /* SSHTunnelErrorExtension.swift in Sources */,
@@ -283,6 +286,7 @@
 				EFC17CA02AC495220072A58F /* SSHTunnelError.swift in Sources */,
 				EF4858832AC5760D0046BFB8 /* SSHTunnelDetailsView.swift in Sources */,
 				EF4DC9BD2AE1CFCE003CC9A6 /* SecureInputView.swift in Sources */,
+				EF921F952B34FCCB00AD33CE /* NotificationService.swift in Sources */,
 				EF2E791B2AC2D8E90084B2DA /* AppDelegate.swift in Sources */,
 				EFC17CA72AC49CAF0072A58F /* AppMenu.swift in Sources */,
 				EF53FA0B2ABCD2100028352E /* ShellService.swift in Sources */,

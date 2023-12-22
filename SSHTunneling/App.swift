@@ -23,6 +23,7 @@ struct SSHTunnelingApp: App {
     init() {
         self.contentView = ContentView()
         self.appMenu = AppMenu()
+        NotificationService.requestAuthorization()
     }
     
 

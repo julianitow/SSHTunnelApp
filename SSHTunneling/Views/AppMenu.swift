@@ -56,7 +56,7 @@ struct AppMenu: View {
             guard let task = ShellService.tasks.first(where: {$0.id == viewModel.tunnels[index].taskId}) else { return }
             if task.exitCode != 130 && task.exitCode != 0 {
                 viewModel.icons[index] = "exclamationmark.triangle"
-                openMainWindow()
+                //openMainWindow()
             }
         })
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.connectionErrorNotification), perform: { data in

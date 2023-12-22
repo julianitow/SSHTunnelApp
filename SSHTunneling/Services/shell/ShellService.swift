@@ -70,6 +70,15 @@ class ShellService {
         return tasks[index].process.resume()
     }
     
+    static func exitCodeToBody(code: Int32) -> String {
+        switch code {
+        case 0:
+            return "Connection closed normally"
+        default:
+            return "Connection refused"
+        }
+    }
+    
     static func terminationHander(process: Process) -> Void {
         print("Exit code =>", process.terminationStatus)
         guard let index = tasks.firstIndex(where: { $0.process.processIdentifier == process.processIdentifier })
@@ -79,6 +88,7 @@ class ShellService {
         linkOutputOf(index)
         tasks[index].exitCode = process.terminationStatus
         DispatchQueue.main.sync {
+            NotificationService.emitNotification(title: "Connection closed", body: exitCodeToBody(code: process.terminationStatus))
             NotificationCenter.default.post(name: Notification.Name.processTerminateNotification, object: tasks[index].id)
         }
     }

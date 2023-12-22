@@ -7,12 +7,14 @@
 
 import Foundation
 import AppKit
+import UserNotifications
 
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
     
     var SSHTunnels: [SSHTunnel]!
     
     func applicationDidFinishLaunching(_ notification: Notification) {
+        UNUserNotificationCenter.current().delegate = self
         if let window = NSApplication.shared.windows.first {
             window.close()
         }
@@ -29,5 +31,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if !ShellService.tasks[index].process.isRunning { continue }
             ShellService.tasks[index].process.terminate()
         }
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        completionHandler()
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .badge, .sound])
     }
 }

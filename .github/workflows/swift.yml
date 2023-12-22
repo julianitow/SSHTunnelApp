@@ -54,7 +54,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           bump_version_scheme: patch
-          release_name: reellize
+          release_name: SSHForwarding
           max_commits: 3
       - name: Upload Release Asset
         id: upload-release-asset 
