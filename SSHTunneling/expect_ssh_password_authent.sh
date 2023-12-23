@@ -18,6 +18,9 @@ expect {
             "denied" {
                 exit 2;
             }
+            "already in use" {
+                exit 4;
+            }
             eof {
               interact
             }

@@ -28,8 +28,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     }
     
     func applicationWillTerminate(_ notification: Notification) {
-        if self.SSHTunnels.isEmpty { return }
-        for tunnel in self.SSHTunnels {
+        guard let _ = self.viewModel else { return }
+        if self.viewModel?.tunnels.count == 0 { return }
+        for tunnel in self.viewModel!.tunnels {
             guard let index = ShellService.tasks.firstIndex(where: {$0.id == tunnel.taskId}) else { continue }
             if !ShellService.tasks[index].process.isRunning { continue }
             ShellService.tasks[index].process.terminate()
