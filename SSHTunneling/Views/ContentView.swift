@@ -42,7 +42,7 @@ struct ContentView: View {
     
     var body: some View {
         NavigationSplitView {
-            List(viewModel.tunnels, id: \.self, selection: $selection) { tunnel in
+            List(viewModel.tunnels, id: \.self, selection: $viewModel.selectedTunnel) { tunnel in
                 NavigationLink(value: tunnel) {
                     Text(tunnel.config.name)
                 }
@@ -61,9 +61,9 @@ struct ContentView: View {
         } detail: {
             NavigationStack {
                 ZStack {
-                    if let selection {
-                        SSHTunnelDetailsView(tunnel: selection, updated: $updated)
-                            .id(selection.id)
+                    if viewModel.selectedTunnel != nil{
+                        SSHTunnelDetailsView(tunnel: viewModel.selectedTunnel!, updated: $updated)
+                            .id(viewModel.selectedTunnel!.id)
                     } else {
                         Text("No config selected")
                     }
@@ -82,7 +82,7 @@ struct ContentView: View {
                 guard let id = UUID(uuidString: String(splitted[1])) else { return }
                 guard let tunnel = self.viewModel.tunnels.first(where: { $0.id == id }) else { return }
                 self.removeConfigFor(tunnel: tunnel)
-                self.viewModel.selectedId = nil
+                self.viewModel.selectedTunnel = nil
             } else if splitted[0] == "duplicateAction" {
                 guard let id = UUID(uuidString: String(splitted[1])) else { return }
                 guard let tunnel = self.viewModel.tunnels.first(where: { $0.id == id }) else { return }

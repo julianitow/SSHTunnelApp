@@ -11,7 +11,7 @@ final class SSHTunnelsViewModel: ObservableObject {
     
     @Published var tunnels: [SSHTunnel]
     @Published var icons: [String]
-    @Published var selectedId: UUID?
+    @Published var selectedTunnel: SSHTunnel?
     
     init(tunnels: [SSHTunnel] = []) {
         self.tunnels = tunnels

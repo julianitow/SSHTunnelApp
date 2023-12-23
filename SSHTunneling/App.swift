@@ -33,6 +33,7 @@ struct SSHTunnelingApp: App {
                 .environmentObject(viewModel)
                 .onAppear {
                     self.appDelegate.SSHTunnels = self.contentView.SSHTunnels
+                    self.appDelegate.viewModel = viewModel
                     VersionService.fetchLatestTag { updateAvailable in
                         self.updateAvailable = updateAvailable
                     }
