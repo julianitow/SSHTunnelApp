@@ -88,7 +88,7 @@ class ShellService {
         linkOutputOf(index)
         tasks[index].exitCode = process.terminationStatus
         DispatchQueue.main.sync {
-            NotificationService.emitNotification(title: "Connection closed", body: exitCodeToBody(code: process.terminationStatus))
+            NotificationService.emitNotification(id: tasks[index].id, title: "Connection closed", body: exitCodeToBody(code: process.terminationStatus))
             NotificationCenter.default.post(name: Notification.Name.processTerminateNotification, object: tasks[index].id)
         }
     }

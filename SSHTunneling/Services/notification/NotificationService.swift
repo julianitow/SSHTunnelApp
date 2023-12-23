@@ -19,7 +19,7 @@ class NotificationService {
         }
     }
 
-    static func emitNotification(title: String, body: String) -> Void {
+    static func emitNotification(id: UUID?, title: String, body: String) -> Void {
         if (!NotificationService.authorized) {
             return
         }
@@ -29,7 +29,7 @@ class NotificationService {
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
 
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: id != nil ? id!.uuidString : UUID().uuidString, content: content, trigger: trigger)
         center.add(request)
     }
 }

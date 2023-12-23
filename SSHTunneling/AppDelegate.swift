@@ -34,6 +34,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let sshTunnelIndex = SSHTunnels.firstIndex(where: { return $0.taskId.uuidString == response.notification.request.identifier })
+        if (sshTunnelIndex == nil) { return }
+        let tunnel = SSHTunnels[sshTunnelIndex!]
+        print(tunnel.config.name)
         completionHandler()
     }
     
