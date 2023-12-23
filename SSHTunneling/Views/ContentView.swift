@@ -18,7 +18,6 @@ struct ContentView: View {
     @State var SSHTunnels: [SSHTunnel] = []
     
     @State private var selection: SSHTunnel?
-    @State private var currentSelection: SSHTunnel?
     
     init() {
         do {
