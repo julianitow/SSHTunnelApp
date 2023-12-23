@@ -38,7 +38,7 @@ struct SSHTunnelingApp: App {
                         self.updateAvailable = updateAvailable
                     }
                 }
-                .alert("New update", isPresented: $updateAvailable) {
+                .alert("New version available: \(VersionService.latestTag?.version ?? "")", isPresented: $updateAvailable) {
                     Button("Later", role: .cancel) {
                         updateAvailable = false
                     }
@@ -82,8 +82,8 @@ struct SSHTunnelingApp: App {
                 Button("About SSHTunnelApp") {
                 NSApplication.shared.orderFrontStandardAboutPanel(
                         options: [
-                            NSApplication.AboutPanelOptionKey.applicationVersion: "Version: \(VersionService.latestTag?.ref.split(separator: "/").last! ?? "")" ,
-                            NSApplication.AboutPanelOptionKey.version: VersionService.latestTag?.ref.split(separator: "/").last! ?? "",
+                            NSApplication.AboutPanelOptionKey.applicationVersion: "Version: \(VersionService.latestTag?.version ?? "")" ,
+                            NSApplication.AboutPanelOptionKey.version: VersionService.latestTag?.version ?? "",
                             NSApplication.AboutPanelOptionKey.credits: NSAttributedString(
                                 string: "Julianitow Development Corporation",
                                 attributes: [
