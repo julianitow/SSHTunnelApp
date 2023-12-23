@@ -7,7 +7,7 @@
 
 import Foundation
 
-class SSHTunnel: Equatable, ObservableObject {
+class SSHTunnel: Equatable, ObservableObject, Hashable {
     
     public let id: UUID
     public var taskId: UUID
@@ -97,5 +97,9 @@ class SSHTunnel: Equatable, ObservableObject {
     
     static func == (lhs: SSHTunnel, rhs: SSHTunnel) -> Bool {
         return lhs.id == rhs.id && rhs.config == lhs.config
+    }
+    
+    func hash(into hasher: inout Hasher) -> Void {
+        hasher.combine(id)
     }
 }

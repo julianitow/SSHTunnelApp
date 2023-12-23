@@ -17,6 +17,9 @@ struct ContentView: View {
     
     @State var SSHTunnels: [SSHTunnel] = []
     
+    @State private var selection: SSHTunnel?
+    @State private var currentSelection: SSHTunnel?
+    
     init() {
         do {
             let configs = try StorageService.getConfigs()
@@ -39,27 +42,37 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(viewModel.tunnels, id: \.self.taskId) { tunnel in
-                    NavigationLink(tunnel.config.name) {
-                        SSHTunnelDetailsView(tunnel: tunnel, updated: $updated)
-                    }
-                    .contextMenu {
-                        VStack {
-                            Button("Duplicate") {
-                                self.duplicateConfigFor(tunnel: tunnel)
-                            }
-                            Divider()
-                            Button("Remove") {
-                                self.removeConfigFor(tunnel: tunnel)
-                            }
+        NavigationSplitView {
+            List(viewModel.tunnels, id: \.self, selection: $selection) { tunnel in
+                NavigationLink(value: tunnel) {
+                    Text(tunnel.config.name)
+                }
+                .contextMenu {
+                    VStack {
+                        Button("Duplicate") {
+                            self.duplicateConfigFor(tunnel: tunnel)
+                        }
+                        Divider()
+                        Button("Remove") {
+                            self.removeConfigFor(tunnel: tunnel)
                         }
                     }
                 }
             }
-            .listStyle(.sidebar)
-            Text("No selection")
+        } detail: {
+            NavigationStack {
+                ZStack {
+                    if let selection {
+                        SSHTunnelDetailsView(tunnel: selection, updated: $updated)
+                            .id(selection.id)
+                    } else {
+                        Text("No config selected")
+                    }
+                }
+            }
+        }
+        .onAppear() {
+            self.viewModel.newTunnels(tunnels: SSHTunnels)
         }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.updateNotification), perform: { data in
             let action = data.object as? String
@@ -81,9 +94,6 @@ struct ContentView: View {
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.resetNotification), perform: { _ in
             StorageService.erase()
         })
-        .onAppear() {
-            self.viewModel.newTunnels(tunnels: SSHTunnels)
-        }
     }
 }
 
