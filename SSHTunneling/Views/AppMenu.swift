@@ -54,6 +54,7 @@ struct AppMenu: View {
             let id = data.object as? UUID
             guard let index = viewModel.tunnels.firstIndex(where: { $0.taskId == id }) else { return }
             guard let task = ShellService.tasks.first(where: {$0.id == viewModel.tunnels[index].taskId}) else { return }
+            NotificationService.emitNotification(id: id, title: "\(viewModel.tunnels[index].config.name): connection closed", body: NotificationService.exitCodeToBody(code: task.exitCode))
             if task.exitCode != 130 && task.exitCode != 0 {
                 viewModel.icons[index] = "exclamationmark.triangle"
                 //openMainWindow()

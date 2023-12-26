@@ -13,6 +13,15 @@ class NotificationService {
     static var authorized = false
     static var center = UNUserNotificationCenter.current()
     
+    static func exitCodeToBody(code: Int32) -> String {
+        switch code {
+        case 0:
+            return "Connection closed normally"
+        default:
+            return "Connection refused"
+        }
+    }
+    
     static func requestAuthorization() -> Void {
         center.requestAuthorization(options: [.criticalAlert, .alert, .badge, .sound]) { (granted, error) in
             NotificationService.authorized = granted
