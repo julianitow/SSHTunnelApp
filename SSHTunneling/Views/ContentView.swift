@@ -80,10 +80,25 @@ struct ContentView: View {
             .navigationTitle(viewModel.selectedTunnel?.config.name ?? "SSHTunneling")
             .toolbar {
                 if (viewModel.selectedTunnel != nil) {
-                    Button("Connect", systemImage: viewModel.selectedTunnel!.isConnected ? "stop.fill" : "play.fill") {
-                        _ = self.viewModel.toggleConnection(for: viewModel.selectedTunnel!.id)
+                    HStack {
+                        Image(systemName: "circle.fill")
+                            .foregroundStyle(viewModel.selectedTunnel!.isConnected ? .green : .red)
+                            
+                        HStack {
+                            Button {
+                                _ = self.viewModel.toggleConnection(for: viewModel.selectedTunnel!.id)
+                            } label: {
+                                if (viewModel.selectedTunnel!.isConnected) {
+                                    Image(systemName: "play.slash.fill")
+                                        .foregroundStyle(.gray, .red)
+                                } else {
+                                    Image(systemName: "play.fill")
+                                        .foregroundStyle(.green, .red)
+                                }
+                            }
+                            .help("Toggle connection for selected configuration")
+                        }
                     }
-                    .help("Toggle connection for selected configuration")
                 }
             }
         }

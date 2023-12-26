@@ -16,6 +16,9 @@ struct SSHTunnelDetailsView: View {
     var body: some View {
         VStack {
             Text(tunnel.config.name)
+            VStack {
+                Text("Status - \(tunnel.isConnected ? "Connected" : "Disconnected")")
+            }
             Form {
                 Section {
                     //Text("Tunnel name:")

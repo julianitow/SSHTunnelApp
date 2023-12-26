@@ -27,8 +27,15 @@ struct AppMenu: View {
         VStack {
             ForEach(0..<viewModel.tunnels.count, id: \.self) { i in
                 HStack {
-                    Button(viewModel.tunnels[i].config.name, systemImage: viewModel.icons[i]) {
+                    Button {
                         _ = viewModel.toggleConnection(for: viewModel.tunnels[i].id)
+                    } label: {
+                        Text(viewModel.tunnels[i].config.name)
+                        if (!viewModel.tunnels[i].isConnected) {
+                            Image(systemName: viewModel.icons[i])
+                        } else {
+                            Image(systemName: viewModel.icons[i]).foregroundStyle(.green, .green)
+                        }
                     }
                     .labelStyle(.titleAndIcon)
                 }
