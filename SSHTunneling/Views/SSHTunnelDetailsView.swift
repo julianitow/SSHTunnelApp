@@ -12,40 +12,27 @@ struct SSHTunnelDetailsView: View {
     @StateObject var tunnel: SSHTunnel
     @Binding var updated: Bool
     @State var passwordAuthentication: Bool = false
-    
+        
     var body: some View {
         VStack {
             Text(tunnel.config.name)
-            HStack {
-                Text("Tunnel name:")
-                TextField("name", text: $tunnel.config.name)
-            }
-            HStack {
-                Text("username:")
-                TextField("username", text: $tunnel.config.username)
-            }
-            HStack {
-                Text("Ip address:")
-                TextField("", text: $tunnel.config.serverIP)
-            }
-            HStack {
-                Text("Local port:")
-                TextField("", value: $tunnel.config.localPort, format: .number)
-            }
-            
-            HStack {
-                Text("Server port:")
-                TextField("", value: $tunnel.config.distantPort, format: .number)
-            }
-            HStack {
-                Text("Authentication:")
-                Toggle(isOn: $passwordAuthentication) {
-                    Text("Use password")
-                    Text("less secured")
-                        .fontWeight(.light)
+            Form {
+                Section {
+                    //Text("Tunnel name:")
+                    TextField("Tunnel name:", text: $tunnel.config.name)
+                    TextField("Username:", text: $tunnel.config.username)
+                    TextField("IP Address:", text: $tunnel.config.serverIP)
+                    TextField("Local port:", value: $tunnel.config.localPort, format: .number)
+                    TextField("Server port:", value: $tunnel.config.distantPort, format: .number)
+                    SecureInputView("Password:", text: $tunnel.config.password, disabled: $passwordAuthentication)
+                    Toggle(isOn: $passwordAuthentication) {
+                        Text("Use password")
+                        Text("less secured")
+                            .fontWeight(.light)
+                    }
                 }
-                SecureInputView("password", text: $tunnel.config.password, disabled: $passwordAuthentication)
             }
+        
             Divider()
             HStack {
                 Text("Result SSH command for this tunnel:")
@@ -82,5 +69,12 @@ struct SSHTunnelDetailsView: View {
             passwordAuthentication = tunnel.config.usePassword
         }
         .padding()
+    }
+}
+
+struct SSHTunnelDetailsView_Previews: PreviewProvider {
+   
+    static var previews: some View {
+        SSHTunnelDetailsView(tunnel: SSHTunnel(), updated: .constant(false))
     }
 }

@@ -7,7 +7,6 @@
 
 import Foundation
 
-let GITHUB_TOKEN = "Bearer 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"
 let BASE_URL = "http://localhost:3000"
 let REPO_URL = "https://github.com/julianitow/SSHTunnelApp/releases"
 
@@ -49,9 +48,6 @@ class VersionService {
 
     static func fetchLatestTag(_ callback: @escaping(Bool) -> Void) -> Void {
         let urlRequest = URLRequest(url: tagsListUrl!)
-        //urlRequest.addValue(GITHUB_TOKEN, forHTTPHeaderField: "Authorization")
-        //urlRequest.addValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
-        //urlRequest.addValue("2022-11-28", forHTTPHeaderField: "X-GitHub-Api-Version")
         let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
             if let error = error {
                 print("Request error: ", error)

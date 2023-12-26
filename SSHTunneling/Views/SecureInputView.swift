@@ -30,7 +30,7 @@ struct SecureInputView: View {
                     TextField(title, text: $text)
                         .disabled(!disabled)
                 }
-            }.padding(.trailing, 32)
+            }.padding(.trailing, 50)
 
             Button(action: {
                 isSecured.toggle()
