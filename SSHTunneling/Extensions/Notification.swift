@@ -20,6 +20,10 @@ extension Notification.Name {
 }
 
 extension Notification.Name {
+    static let refreshNotification = Notification.Name("refreshNotification")
+}
+
+extension Notification.Name {
     static let processTerminateNotification = Notification.Name("processTerminateNotification")
 }
 

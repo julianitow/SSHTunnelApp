@@ -15,7 +15,7 @@ struct AppMenu: View {
     func openMainWindow() -> Void {
         NSApp.setActivationPolicy(.regular)
         DispatchQueue.main.async {
-            let window = NSApp.windows.firstIndex(where: { $0.title == "SSHTunneling"})
+            let window = NSApp.windows.firstIndex(where: { $0.title == viewModel.selectedTunnel?.config.name ?? "SSHTunneling" })
             if window != nil {
                 NSApp.windows.first?.makeKeyAndOrderFront(nil)
                 NSApp.activate(ignoringOtherApps: true)
@@ -28,14 +28,7 @@ struct AppMenu: View {
             ForEach(0..<viewModel.tunnels.count, id: \.self) { i in
                 HStack {
                     Button(viewModel.tunnels[i].config.name, systemImage: viewModel.icons[i]) {
-                        if !viewModel.tunnels[i].isConnected {
-                            if viewModel.tunnels[i].connect() {
-                                viewModel.icons[i] = "circle.fill"
-                            }
-                            return
-                        }
-                        viewModel.tunnels[i].disconnect()
-                        viewModel.icons[i] = "circle.dotted"
+                        _ = viewModel.toggleConnection(for: viewModel.tunnels[i].id)
                     }
                     .labelStyle(.titleAndIcon)
                 }

@@ -21,7 +21,7 @@
 		EF53FA012ABCD1440028352E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF53FA002ABCD1440028352E /* Preview Assets.xcassets */; };
 		EF53FA0B2ABCD2100028352E /* ShellService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF53FA0A2ABCD2100028352E /* ShellService.swift */; };
 		EF7ED6272AC0587600A1FBAB /* SSHTunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7ED6262AC0587600A1FBAB /* SSHTunnel.swift */; };
-		EF921F952B34FCCB00AD33CE /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF921F942B34FCCB00AD33CE /* NotificationService.swift */; };
+		EF921F952B34FCCB00AD33CE /* LocalNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF921F942B34FCCB00AD33CE /* LocalNotificationService.swift */; };
 		EFACDF412ACDA24A0056AEF6 /* expect_ssh_password_authent.sh in Resources */ = {isa = PBXBuildFile; fileRef = EFACDF3D2ACD9F980056AEF6 /* expect_ssh_password_authent.sh */; };
 		EFC17CA02AC495220072A58F /* SSHTunnelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC17C9F2AC495220072A58F /* SSHTunnelError.swift */; };
 		EFC17CA32AC495400072A58F /* SSHTunnelErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC17CA22AC495400072A58F /* SSHTunnelErrorExtension.swift */; };
@@ -47,7 +47,7 @@
 		EF53FA0A2ABCD2100028352E /* ShellService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellService.swift; sourceTree = "<group>"; };
 		EF7ED6262AC0587600A1FBAB /* SSHTunnel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTunnel.swift; sourceTree = "<group>"; };
 		EF7ED62A2AC0651300A1FBAB /* SSHTunneling.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SSHTunneling.entitlements; sourceTree = "<group>"; };
-		EF921F942B34FCCB00AD33CE /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		EF921F942B34FCCB00AD33CE /* LocalNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationService.swift; sourceTree = "<group>"; };
 		EFACDF3D2ACD9F980056AEF6 /* expect_ssh_password_authent.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = expect_ssh_password_authent.sh; sourceTree = "<group>"; };
 		EFACDF402ACDA1EE0056AEF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		EFC17C9F2AC495220072A58F /* SSHTunnelError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTunnelError.swift; sourceTree = "<group>"; };
@@ -160,7 +160,7 @@
 		EF921F932B34FCB600AD33CE /* notification */ = {
 			isa = PBXGroup;
 			children = (
-				EF921F942B34FCCB00AD33CE /* NotificationService.swift */,
+				EF921F942B34FCCB00AD33CE /* LocalNotificationService.swift */,
 			);
 			path = notification;
 			sourceTree = "<group>";
@@ -286,7 +286,7 @@
 				EFC17CA02AC495220072A58F /* SSHTunnelError.swift in Sources */,
 				EF4858832AC5760D0046BFB8 /* SSHTunnelDetailsView.swift in Sources */,
 				EF4DC9BD2AE1CFCE003CC9A6 /* SecureInputView.swift in Sources */,
-				EF921F952B34FCCB00AD33CE /* NotificationService.swift in Sources */,
+				EF921F952B34FCCB00AD33CE /* LocalNotificationService.swift in Sources */,
 				EF2E791B2AC2D8E90084B2DA /* AppDelegate.swift in Sources */,
 				EFC17CA72AC49CAF0072A58F /* AppMenu.swift in Sources */,
 				EF53FA0B2ABCD2100028352E /* ShellService.swift in Sources */,

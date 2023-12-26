@@ -69,6 +69,14 @@ struct ContentView: View {
                     }
                 }
             }
+            .navigationTitle(viewModel.selectedTunnel?.config.name ?? "SSHTunneling")
+            .toolbar {
+                if (viewModel.selectedTunnel != nil) {
+                    Button("Connect", systemImage: viewModel.selectedTunnel!.isConnected ? "stop.fill" : "play.fill") {
+                        _ = self.viewModel.toggleConnection(for: viewModel.selectedTunnel!.id)
+                    }
+                }
+            }
         }
         .onAppear() {
             self.viewModel.newTunnels(tunnels: SSHTunnels)

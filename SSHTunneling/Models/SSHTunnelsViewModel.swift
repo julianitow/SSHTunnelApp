@@ -18,6 +18,19 @@ final class SSHTunnelsViewModel: ObservableObject {
         self.icons = Array(repeating: "circle.dotted", count: tunnels.count)
     }
     
+    func toggleConnection(for tunnelId: UUID) -> Bool? {
+        guard let tunnel = self.tunnels.first(where: { $0.id == tunnelId }) else { return nil }
+        if (tunnel.isConnected) {
+            tunnel.disconnect()
+            self.icons[self.tunnels.firstIndex(where: { $0.id == tunnel.id})!] = "circle.dotted"
+            return false
+        } else {
+            _ = tunnel.connect()
+            self.icons[self.tunnels.firstIndex(where: { $0.id == tunnel.id})!] = "circle.fill"
+            return true
+        }
+    }
+    
     func newTunnel() -> Void {
         self.tunnels.append(SSHTunnel())
         self.icons.append("circle.dotted")
