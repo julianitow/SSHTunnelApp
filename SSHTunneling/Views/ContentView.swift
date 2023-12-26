@@ -12,12 +12,14 @@ struct ContentView: View {
     @State var exitCode: Int32 = 0
     @EnvironmentObject var viewModel: SSHTunnelsViewModel
     @State var updated: Bool = false
-    @State var newConfigForm: Bool = false
+    @State var deleteAlertPresented: Bool = false
     @StateObject var newTunnel: SSHTunnel = SSHTunnel()
     
     @State var SSHTunnels: [SSHTunnel] = []
     
     @State private var selection: SSHTunnel?
+    
+    @State var deleteId: UUID?
     
     init() {
         do {
@@ -53,10 +55,16 @@ struct ContentView: View {
                         }
                         Divider()
                         Button("Remove") {
-                            self.removeConfigFor(tunnel: tunnel)
+                            NotificationCenter.default.post(name: Notification.Name.updateNotification, object: "removeAction:\(tunnel.id)")
                         }
                     }
                 }
+            }.toolbar {
+                Button("add", systemImage: "plus") {
+                    viewModel.newTunnel()
+                }
+                .help("Add a new tunnel configuration")
+                //.padding(.trailing, )
             }
         } detail: {
             NavigationStack {
@@ -75,11 +83,23 @@ struct ContentView: View {
                     Button("Connect", systemImage: viewModel.selectedTunnel!.isConnected ? "stop.fill" : "play.fill") {
                         _ = self.viewModel.toggleConnection(for: viewModel.selectedTunnel!.id)
                     }
+                    .help("Toggle connection for selected configuration")
                 }
             }
         }
         .onAppear() {
             self.viewModel.newTunnels(tunnels: SSHTunnels)
+        }
+        .alert("Are you sure ?", isPresented: $deleteAlertPresented) {
+            Button("NO NO NO", role: .cancel) {
+                self.deleteAlertPresented = false
+            }
+            Button("Yup") {
+                guard let tunnel = self.viewModel.tunnels.first(where: { $0.id == self.deleteId }) else { return }
+                self.removeConfigFor(tunnel: tunnel)
+                self.viewModel.selectedTunnel = nil
+                self.deleteAlertPresented = false
+            }
         }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.updateNotification), perform: { data in
             let action = data.object as? String
@@ -87,10 +107,11 @@ struct ContentView: View {
                 return
             }
             if splitted[0] == "removeAction" {
-                guard let id = UUID(uuidString: String(splitted[1])) else { return }
-                guard let tunnel = self.viewModel.tunnels.first(where: { $0.id == id }) else { return }
-                self.removeConfigFor(tunnel: tunnel)
-                self.viewModel.selectedTunnel = nil
+                self.deleteId = UUID(uuidString: String(splitted[1]))
+                if (self.deleteId == nil) {
+                    return
+                }
+                self.deleteAlertPresented = true
             } else if splitted[0] == "duplicateAction" {
                 guard let id = UUID(uuidString: String(splitted[1])) else { return }
                 guard let tunnel = self.viewModel.tunnels.first(where: { $0.id == id }) else { return }
