@@ -44,7 +44,7 @@ class VersionService {
     
     static let tagsListUrl = URL(string: "\(BASE_URL)/latest");
     static var latestTag: TAG? = nil
-    static var currentTag = TAG(version: "v0.1.9", url: "")
+    static var currentTag = TAG(version: "v0.2.0", url: "")
 
     static func fetchLatestTag(_ callback: @escaping(Bool) -> Void) -> Void {
         let urlRequest = URLRequest(url: tagsListUrl!)
