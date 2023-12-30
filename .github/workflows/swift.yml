@@ -53,7 +53,7 @@ jobs:
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          bump_version_scheme: patch
+          bump_version_scheme: ${{ env.BUMP_VERSION_SCHEME }}
           release_name: SSHForwarding
           max_commits: 3
       - name: Upload Release Asset
