@@ -13,13 +13,13 @@ The application is developed in Swift for macOS, providing a user-friendly inter
 - Create both local and remote SSH tunnels.
 - Manage SSH keys for secure authentication. (TBD)
 - Advanced tunnel configuration settings, including local and remote ports.
-- Profile management for easy configuration and tunnel reuse.
+- Profile management for easy configuration and tunnel reuse. (TBD)
 - Real-time status visualization of active tunnels.
 
 ## Installation
 
 1. Download the latest version of the application from [releases](https://github.com/julianitow/SSHTunnelApp/releases).
-2. Double-click the .dmg file to mount the application volume.
+2. Extract app from downloaded zip file to applications folder. 
 3. Drag and drop the application into the Applications folder.
 
 ## Usage
@@ -29,7 +29,7 @@ The application is developed in Swift for macOS, providing a user-friendly inter
 3. Activate the tunnel by clicking the "Connect" button.
 4. Monitor the tunnel's status in the list of active tunnels.
 
-##Development
+## Development
 
 If you wish to contribute to the development of this application, follow these steps:
 
