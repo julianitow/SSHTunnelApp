@@ -7,7 +7,7 @@
 
 import Foundation
 
-let BASE_URL = "http://localhost:3000"
+let BASE_URL = "https://version-server.julianitow.ovh"
 let REPO_URL = "https://github.com/julianitow/SSHTunnelApp/releases"
 
 struct TAG: Decodable, Equatable {
