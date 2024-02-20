@@ -17,6 +17,8 @@ class NotificationService {
         switch code {
         case 0:
             return "Connection closed normally"
+        case 999:
+            return "Connection closed due to a problem"
         default:
             return "Connection refused"
         }
