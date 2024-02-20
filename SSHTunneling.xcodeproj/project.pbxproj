@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,13 +23,13 @@
 		EF53F9FE2ABCD1440028352E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF53F9FD2ABCD1440028352E /* Assets.xcassets */; };
 		EF53FA012ABCD1440028352E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF53FA002ABCD1440028352E /* Preview Assets.xcassets */; };
 		EF53FA0B2ABCD2100028352E /* ShellService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF53FA0A2ABCD2100028352E /* ShellService.swift */; };
+		EF6FEA902B85623400047597 /* NIOSSH in Frameworks */ = {isa = PBXBuildFile; productRef = EF6FEA8F2B85623400047597 /* NIOSSH */; };
 		EF7ED6272AC0587600A1FBAB /* SSHTunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7ED6262AC0587600A1FBAB /* SSHTunnel.swift */; };
 		EF921F952B34FCCB00AD33CE /* LocalNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF921F942B34FCCB00AD33CE /* LocalNotificationService.swift */; };
 		EFACDF412ACDA24A0056AEF6 /* expect_ssh_password_authent.sh in Resources */ = {isa = PBXBuildFile; fileRef = EFACDF3D2ACD9F980056AEF6 /* expect_ssh_password_authent.sh */; };
 		EFC17CA02AC495220072A58F /* SSHTunnelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC17C9F2AC495220072A58F /* SSHTunnelError.swift */; };
 		EFC17CA32AC495400072A58F /* SSHTunnelErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC17CA22AC495400072A58F /* SSHTunnelErrorExtension.swift */; };
 		EFC17CA72AC49CAF0072A58F /* AppMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC17CA62AC49CAF0072A58F /* AppMenu.swift */; };
-		EFE5CFFD2B588340002311C0 /* NIOSSH in Frameworks */ = {isa = PBXBuildFile; productRef = EFE5CFFC2B588340002311C0 /* NIOSSH */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,7 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFE5CFFD2B588340002311C0 /* NIOSSH in Frameworks */,
+				EF6FEA902B85623400047597 /* NIOSSH in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,7 +236,7 @@
 			);
 			name = SSHTunneling;
 			packageProductDependencies = (
-				EFE5CFFC2B588340002311C0 /* NIOSSH */,
+				EF6FEA8F2B85623400047597 /* NIOSSH */,
 			);
 			productName = SSHTunneling;
 			productReference = EF53F9F62ABCD1430028352E /* SSHTunneling.app */;
@@ -270,7 +270,7 @@
 			);
 			mainGroup = EF53F9ED2ABCD1430028352E;
 			packageReferences = (
-				EFE5CFFB2B588340002311C0 /* XCLocalSwiftPackageReference "../swift-nio-ssh" */,
+				EF6FEA8E2B85623400047597 /* XCRemoteSwiftPackageReference "swift-nio-ssh" */,
 			);
 			productRefGroup = EF53F9F72ABCD1430028352E /* Products */;
 			projectDirPath = "";
@@ -528,16 +528,21 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		EFE5CFFB2B588340002311C0 /* XCLocalSwiftPackageReference "../swift-nio-ssh" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../swift-nio-ssh";
+/* Begin XCRemoteSwiftPackageReference section */
+		EF6FEA8E2B85623400047597 /* XCRemoteSwiftPackageReference "swift-nio-ssh" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-nio-ssh";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.8.0;
+			};
 		};
-/* End XCLocalSwiftPackageReference section */
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		EFE5CFFC2B588340002311C0 /* NIOSSH */ = {
+		EF6FEA8F2B85623400047597 /* NIOSSH */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = EF6FEA8E2B85623400047597 /* XCRemoteSwiftPackageReference "swift-nio-ssh" */;
 			productName = NIOSSH;
 		};
 /* End XCSwiftPackageProductDependency section */
