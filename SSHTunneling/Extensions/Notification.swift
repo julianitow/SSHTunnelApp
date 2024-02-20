@@ -32,5 +32,9 @@ extension Notification.Name {
 }
 
 extension Notification.Name {
-    static let connectionNotification = Notification.Name("connectionNoticiation")
+    static let connectionNotification = Notification.Name("connectionNotification")
+}
+
+extension Notification.Name {
+    static let endConnectionNotification = Notification.Name("endConnectionNotification")
 }

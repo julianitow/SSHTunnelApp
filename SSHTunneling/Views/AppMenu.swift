@@ -78,6 +78,16 @@ struct AppMenu: View {
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.connectionNotification), perform: { data in
             viewModel.objectWillChange.send()
         })
+        .onReceive(NotificationCenter.default.publisher(for: .endConnectionNotification), perform: { data in
+            let id = data.object as? UUID
+            guard let index = viewModel.tunnels.firstIndex(where: { $0.taskId == id }) else { return }
+            NotificationService.emitNotification(id: id, title: "\(viewModel.tunnels[index].config.name): connection closed", body: NotificationService.exitCodeToBody(code: 0))
+        })
+        .onReceive(NotificationCenter.default.publisher(for: .connectionErrorNotification), perform: { data in
+            let id = data.object as? UUID
+            guard let index = viewModel.tunnels.firstIndex(where: { $0.taskId == id }) else { return }
+            NotificationService.emitNotification(id: id, title: "\(viewModel.tunnels[index].config.name): connection closed", body: NotificationService.exitCodeToBody(code: 999))
+        })
     }
     
 }

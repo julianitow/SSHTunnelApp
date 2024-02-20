@@ -13,25 +13,21 @@ import Foundation
 
 final class ErrorHandler: ChannelInboundHandler {
     typealias InboundIn = Any
+    let tunnelId: UUID
+    
+    init(tunnelId: UUID) {
+        self.tunnelId = tunnelId
+    }
 
     func errorCaught(context: ChannelHandlerContext, error: Error) {
         print("Error in pipeline: \(error)")
         context.close(promise: nil)
-    }
-}
-
-/**
-* TEMPORARY MADE FOR IMPLMENTATION TESTING PURPOSES ONLY !!!
- */
-final class AcceptAllHostKeysDelegate: NIOSSHClientServerAuthenticationDelegate {
-    func validateHostKey(hostKey: NIOSSHPublicKey, validationCompletePromise: EventLoopPromise<Void>) {
-        // Do not replicate this in your own code: validate host keys! This is a
-        // choice made for expedience, not for any other reason.
-        validationCompletePromise.succeed(())
+        NotificationCenter.default.post(name: Notification.Name.connectionErrorNotification, object: self.tunnelId)
     }
 }
 
 class NIOSSHClient {
+    let id: UUID
     var group: MultiThreadedEventLoopGroup?
     var bootstrap: ClientBootstrap?
     //var channel: Channel?
@@ -47,12 +43,12 @@ class NIOSSHClient {
     var password: String?
     
     
-    init() {
-
+    init(id: UUID) {
+        self.id = id
     }
     
     func debugConfig() -> Void {
-        print(" host: \(self.host)\n port: \(self.port)\n targetHost: \(self.targetHost)\n targetPort: \(self.targetPort)\n username: \(self.username)\n password: \(self.password) ")
+        print(" host: \(String(describing: self.host))\n port: \(String(describing: self.port))\n targetHost: \(String(describing: self.targetHost))\n targetPort: \(String(describing: self.targetPort))\n username: \(String(describing: self.username))\n password: \(String(describing: self.password)) ")
     }
     
     func setConfig(config: SSHTunnelConfig) -> Void {
@@ -81,7 +77,7 @@ class NIOSSHClient {
             .channelInitializer { channel in
                 channel.pipeline.addHandlers([
                     NIOSSHHandler(role: .client(clientConfiguration), allocator: channel.allocator, inboundChildChannelInitializer: nil),
-                    ErrorHandler()
+                    ErrorHandler(tunnelId: self.id)
                 ])
             }
             .channelOption(ChannelOptions.socket(SocketOptionLevel(SOL_SOCKET), SO_REUSEADDR), value: 1)
@@ -115,8 +111,8 @@ class NIOSSHClient {
                     }
                     
                     let (ours, theirs) = GlueHandler.matchedPair()
-                    return childChannel.pipeline.addHandlers([SSHWrapperHandler(), ours, ErrorHandler()]).flatMap {
-                        inboundChannel.pipeline.addHandlers([theirs, ErrorHandler()])
+                    return childChannel.pipeline.addHandlers([SSHWrapperHandler(), ours, ErrorHandler(tunnelId: self.id)]).flatMap {
+                        inboundChannel.pipeline.addHandlers([theirs, ErrorHandler(tunnelId: self.id)])
                     }
                 }
                 return promise.futureResult.map { _ in }
@@ -138,6 +134,7 @@ class NIOSSHClient {
         _ = self.server?.close()
         self.shutdown()
         self.isConnected = false
+        NotificationCenter.default.post(name: Notification.Name.endConnectionNotification, object: self.id)
     }
 }
 

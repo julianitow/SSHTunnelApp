@@ -42,7 +42,7 @@ class SSHTunnel: Equatable, ObservableObject, Hashable {
             return
         }
         self.taskId = self.id
-        self.SSHClient = NIOSSHClient()
+        self.SSHClient = NIOSSHClient(id: self.id)
         self.SSHClient!.setConfig(config: self.config)
     }
     
