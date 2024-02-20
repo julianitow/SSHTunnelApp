@@ -12,6 +12,7 @@ struct SSHTunnelDetailsView: View {
     @StateObject var tunnel: SSHTunnel
     @Binding var updated: Bool
     @State var passwordAuthentication: Bool = false
+    @State var useNio: Bool = false
         
     var body: some View {
         VStack {
@@ -33,22 +34,30 @@ struct SSHTunnelDetailsView: View {
                         Text("less secured")
                             .fontWeight(.light)
                     }
+                    Toggle(isOn: $useNio) {
+                        Text("Use NIO Library")
+                        Text("Experimental")
+                            .fontWeight(.light)
+                    }
                 }
             }
         
             Divider()
-            HStack {
-                Text("Result SSH command for this tunnel:")
-                Text(tunnel.cmd ?? "config not applied")
-                    .bold()
-                    .italic()
-                    .textSelection(.enabled)
+            if (!useNio) {
+                HStack {
+                    Text("Result SSH command for this tunnel:")
+                    Text(tunnel.cmd ?? "config not applied")
+                        .bold()
+                        .italic()
+                        .textSelection(.enabled)
+                }
+                Divider()
             }
-            Divider()
             HStack {
                 Button("Save", systemImage: "opticaldisc.fill") {
                     tunnel.updateConfig(config: tunnel.config)
                     tunnel.config.usePassword = passwordAuthentication
+                    tunnel.config.useNio = useNio
                     StorageService.updateConfig(config: tunnel.config)
                     self.updated.toggle()
                     NotificationCenter.default.post(name: Notification.Name.updateNotification, object: "updateAction:\(tunnel.id)")
@@ -70,6 +79,7 @@ struct SSHTunnelDetailsView: View {
         }
         .onAppear {
             passwordAuthentication = tunnel.config.usePassword
+            useNio = tunnel.config.useNio ?? false
         }
         .padding()
     }
