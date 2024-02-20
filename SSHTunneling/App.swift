@@ -69,12 +69,12 @@ struct SSHTunnelingApp: App {
             CommandGroup(replacing: .printItem) {
                 EmptyView()
             }
-            CommandGroup(replacing: .undoRedo) {
-                EmptyView()
-            }
-            CommandGroup(replacing: .pasteboard) {
-                EmptyView()
-            }
+            // CommandGroup(replacing: .undoRedo) {
+            //     EmptyView()
+            // }
+            // CommandGroup(replacing: .pasteboard) {
+            //     EmptyView()
+            // }
             CommandGroup(replacing: .help) {
                 EmptyView()
             }
