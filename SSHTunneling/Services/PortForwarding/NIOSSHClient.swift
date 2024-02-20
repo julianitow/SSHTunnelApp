@@ -35,6 +35,7 @@ class NIOSSHClient {
     var bootstrap: ClientBootstrap?
     //var channel: Channel?
     var server: PortForwardingServer?
+    var isConnected: Bool = false
     
     var host: Substring?
     var port: Int?
@@ -72,7 +73,7 @@ class NIOSSHClient {
             print("Missing configuration")
             return false
         }
-        debugConfig()
+        //debugConfig()
         self.group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
         let clientConfiguration = SSHClientConfiguration(userAuthDelegate: self, serverAuthDelegate: self)
         self.bootstrap = ClientBootstrap(group: self.group!)
@@ -87,6 +88,7 @@ class NIOSSHClient {
         let channel: Channel
         do {
             channel = try self.bootstrap!.connect(host: self.targetHost!, port: self.targetSSHPort ?? 22).wait()
+            self.isConnected = true
         } catch {
             print(error)
             return false
@@ -130,6 +132,8 @@ class NIOSSHClient {
     
     func disconnect() -> Void {
         _ = self.server?.close()
+        self.shutdown()
+        self.isConnected = false
     }
 }
 

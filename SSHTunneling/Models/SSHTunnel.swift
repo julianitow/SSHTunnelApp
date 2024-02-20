@@ -14,15 +14,13 @@ class SSHTunnel: Equatable, ObservableObject, Hashable {
     public var config: SSHTunnelConfig
     public var cmd: String?
     public let fileManager = FileManager.default
-    public var nioSSH: Bool?
-    private var SSHClients: [NIOSSHClient] = []
+    private var SSHClient: NIOSSHClient?
     private let queue = DispatchQueue(label: "bg", qos: .background)
         
-    init(config: SSHTunnelConfig, nioSSH: Bool = false) {
+    init(config: SSHTunnelConfig) {
         self.id = UUID()
         self.config = config
-        self.nioSSH = nioSSH
-        if (!nioSSH) {
+        if (!(config.useNio ?? false)) {
             if config.usePassword {
                 if config.password.contains("$"){
                     self.config.password = config.password.replacingOccurrences(of: "$", with: "\\\\$")
@@ -44,6 +42,8 @@ class SSHTunnel: Equatable, ObservableObject, Hashable {
             return
         }
         self.taskId = self.id
+        self.SSHClient = NIOSSHClient()
+        self.SSHClient!.setConfig(config: self.config)
     }
     
     init() {
@@ -82,7 +82,7 @@ class SSHTunnel: Equatable, ObservableObject, Hashable {
     var isConnected: Bool {
         let useNio = self.config.useNio ?? false
         if (!useNio) { return ShellService.isRunning(id: self.taskId) }
-        return false
+        return self.SSHClient?.isConnected ?? false
     }
     
     func connect() -> Bool {
@@ -92,12 +92,8 @@ class SSHTunnel: Equatable, ObservableObject, Hashable {
     }
     
     func nioConnect() -> Bool {
-        print("NIO Connect")
-        let client = NIOSSHClient()
-        client.setConfig(config: self.config)
-        self.SSHClients.append(client)
         self.queue.async {
-            _ = self.SSHClients.last?.listen()
+            _ = self.SSHClient!.listen()
         }
         return true
         //return client.listen()
@@ -130,7 +126,7 @@ class SSHTunnel: Equatable, ObservableObject, Hashable {
     }
     
     func nioDisconnect() -> Void {
-        print("NIO Disconnect")
+        self.SSHClient?.disconnect()
     }
     
     func _legacy_disconnect() -> Void {

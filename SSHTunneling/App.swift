@@ -55,14 +55,15 @@ struct SSHTunnelingApp: App {
                     viewModel.newTunnel()
                 }
                 Divider()
-                Button("NIO TEST") {
-                    let sshClient = NIOSSHClient()
-                    sshClient.setConfig(host: "***REMOVED***", port: 27018, targetHost: "***REMOVED***", targetPort: 27017)
-                    let queue = DispatchQueue(label: "bg", qos: .background)
-                    queue.async {
-                        sshClient.listen()
-                    }
-                }
+                //Button("NIO TEST") {
+                //    let sshClient = NIOSSHClient()
+                //    let config: SSHTunnelConfig = SSHTunnelConfig(name: "TEST", username: "***REMOVED***", serverIP: "***REMOVED***", to: "127.0.0.1", localPort: 27018, //distantPort: 27017)
+                //    sshClient.setConfig(config: config)
+                //    let queue = DispatchQueue(label: "bg", qos: .background)
+                //    queue.async {
+                //        sshClient.listen()
+                //    }
+                //}
                 Divider()
                 Button("Check for update") {
                     VersionService.fetchLatestTag { updateAvailable in
