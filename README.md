@@ -8,6 +8,8 @@ The SSH Tunneling application is a simple yet powerful utility for establishing 
 
 The application is developed in Swift for macOS, providing a user-friendly interface for configuring and managing SSH tunnels with ease.
 
+> Since [version 0.3.0](https://github.com/julianitow/SSHTunnelApp/releases/tag/v0.3.0), SwiftNIO SSH is available to use at config (0.3.0 only accepts password authentication, keys will be implemented soon). It resolve some issues that can happen when using passwords without NIO usage.
+
 ## Features
 
 - Create both local and remote SSH tunnels.
@@ -21,6 +23,7 @@ The application is developed in Swift for macOS, providing a user-friendly inter
 1. Download the latest version of the application from [releases](https://github.com/julianitow/SSHTunnelApp/releases).
 2. Extract app from downloaded zip file to applications folder. 
 3. Drag and drop the application into the Applications folder.
+4. Go to the security settings in MacOS and click "open" (needed for now)
 
 ## Usage
 
