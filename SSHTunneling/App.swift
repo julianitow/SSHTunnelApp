@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import NIOCore
+import NIOSSH
+import NIOEmbedded
 
 @main
 struct SSHTunnelingApp: App {
@@ -25,7 +28,6 @@ struct SSHTunnelingApp: App {
         self.appMenu = AppMenu()
         NotificationService.requestAuthorization()
     }
-    
 
     var body: some Scene {
         Window("SSHTunneling", id: "main-window") {
@@ -34,9 +36,9 @@ struct SSHTunnelingApp: App {
                 .onAppear {
                     self.appDelegate.SSHTunnels = self.contentView.SSHTunnels
                     self.appDelegate.viewModel = viewModel
-                    VersionService.fetchLatestTag { updateAvailable in
-                        self.updateAvailable = updateAvailable
-                    }
+                    // VersionService.fetchLatestTag { updateAvailable in
+                    //     self.updateAvailable = updateAvailable
+                    // }
                 }
                 .alert("New version available: \(VersionService.latestTag?.version ?? "")", isPresented: $updateAvailable) {
                     Button("Later", role: .cancel) {
@@ -52,6 +54,16 @@ struct SSHTunnelingApp: App {
                 Button("New tunnel") {
                     viewModel.newTunnel()
                 }
+                Divider()
+                //Button("NIO TEST") {
+                //    let sshClient = NIOSSHClient()
+                //    let config: SSHTunnelConfig = SSHTunnelConfig(name: "TEST", username: "medissimo", serverIP: "10.29.132.8", to: "127.0.0.1", localPort: 27018, //distantPort: 27017)
+                //    sshClient.setConfig(config: config)
+                //    let queue = DispatchQueue(label: "bg", qos: .background)
+                //    queue.async {
+                //        sshClient.listen()
+                //    }
+                //}
                 Divider()
                 Button("Check for update") {
                     VersionService.fetchLatestTag { updateAvailable in

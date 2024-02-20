@@ -8,6 +8,8 @@
 import Foundation
 import AppKit
 import UserNotifications
+import NIOCore
+import NIOSSH
 
 class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
     

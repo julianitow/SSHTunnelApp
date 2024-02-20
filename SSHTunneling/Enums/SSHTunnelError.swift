@@ -11,3 +11,11 @@ enum SSHTunnelError: Error {
     case ErrorResumingTask
     case unexpected(code: Int)
 }
+
+enum SSHClientError: Error {
+    case passwordAuthenticationNotSupported
+    case commandExecFailed
+    case invalidChannelType
+    case invalidData
+    case badCredentials
+}
