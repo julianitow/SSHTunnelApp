@@ -18,9 +18,10 @@ class SSHTunnelConfig: Codable, Equatable, ObservableObject, CustomStringConvert
     public var username: String
     public var usePassword: Bool
     public var password: String = ""
+    public var useNio: Bool? //optional because of old configurations might not containing this attribute during decoding saved configs
     
     public var description: String {
-        return " ################\n id: \(id)\n name: \(self.name)\n serverIP: \(self.serverIP)\n toIp: \(self.toIP)\n localPort: \(localPort)\n distantPort: \(self.distantPort)\n username: \(self.username)\n usePassword: \(self.usePassword)"
+        return " ################\n id: \(id)\n name: \(self.name)\n serverIP: \(self.serverIP)\n toIp: \(self.toIP)\n localPort: \(localPort)\n distantPort: \(self.distantPort)\n username: \(self.username)\n usePassword: \(self.usePassword)\n useNio: \(self.useNio ?? false)"
     }
     
     init(name: String, username: String, serverIP: String, to: String, localPort: Int, distantPort: Int) {
@@ -32,6 +33,7 @@ class SSHTunnelConfig: Codable, Equatable, ObservableObject, CustomStringConvert
         self.distantPort = distantPort
         self.username = username
         self.usePassword = false
+        self.useNio = false
     }
     
     static func duplicate(from: SSHTunnelConfig) -> SSHTunnelConfig {

@@ -14,10 +14,14 @@ class SSHTunnel: Equatable, ObservableObject, Hashable {
     public var config: SSHTunnelConfig
     public var cmd: String?
     public let fileManager = FileManager.default
+    public var nioSSH: Bool?
+    private var SSHClients: [NIOSSHClient] = []
+    private let queue = DispatchQueue(label: "bg", qos: .background)
         
     init(config: SSHTunnelConfig, nioSSH: Bool = false) {
         self.id = UUID()
         self.config = config
+        self.nioSSH = nioSSH
         if (!nioSSH) {
             if config.usePassword {
                 if config.password.contains("$"){
@@ -36,8 +40,10 @@ class SSHTunnel: Equatable, ObservableObject, Hashable {
             } else {
                 self.cmd = "ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort)"
             }
+            self.taskId = ShellService.createShellTask(self.cmd!)
+            return
         }
-        self.taskId = ShellService.createShellTask(self.cmd!)
+        self.taskId = self.id
     }
     
     init() {
@@ -48,7 +54,6 @@ class SSHTunnel: Equatable, ObservableObject, Hashable {
     }
     
     func setCommand() -> Void {
-        print("CONNECT CALLED")
         if self.config.usePassword {
             if (self.config.password.contains("$") && !self.config.password.contains("\\$")){
                 self.config.password = config.password.replacingOccurrences(of: "$", with: "\\\\$")
@@ -68,15 +73,37 @@ class SSHTunnel: Equatable, ObservableObject, Hashable {
     
     func updateConfig(config: SSHTunnelConfig) {
         self.config = config
-        self.setCommand()
+        if(!(config.useNio ?? false)) {
+            self.setCommand()
+        }
         //objectWillChange.send()
     }
     
     var isConnected: Bool {
-        return ShellService.isRunning(id: self.taskId)
+        let useNio = self.config.useNio ?? false
+        if (!useNio) { return ShellService.isRunning(id: self.taskId) }
+        return false
     }
     
-    func connect(_ linkOutput: Bool? = false, password: String? = nil) -> Bool {
+    func connect() -> Bool {
+        let useNio = self.config.useNio ?? false
+        if (!useNio) { return self._legacy_connect() }
+        return nioConnect()
+    }
+    
+    func nioConnect() -> Bool {
+        print("NIO Connect")
+        let client = NIOSSHClient()
+        client.setConfig(config: self.config)
+        self.SSHClients.append(client)
+        self.queue.async {
+            _ = self.SSHClients.last?.listen()
+        }
+        return true
+        //return client.listen()
+    }
+    
+    func _legacy_connect(_ linkOutput: Bool? = false, password: String? = nil) -> Bool {
         do {
             /*if ShellService.isSuspended(id: taskId) {
                 if !ShellService.resumeTask(id: taskId) {
@@ -97,6 +124,16 @@ class SSHTunnel: Equatable, ObservableObject, Hashable {
     }
     
     func disconnect() -> Void {
+        let useNio = self.config.useNio ?? false
+        if (!useNio) { return self._legacy_disconnect() }
+        return nioDisconnect()
+    }
+    
+    func nioDisconnect() -> Void {
+        print("NIO Disconnect")
+    }
+    
+    func _legacy_disconnect() -> Void {
         return ShellService.stopTask(id: self.taskId)
     }
     

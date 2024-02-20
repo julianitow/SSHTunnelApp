@@ -17,4 +17,5 @@ enum SSHClientError: Error {
     case commandExecFailed
     case invalidChannelType
     case invalidData
+    case badCredentials
 }
