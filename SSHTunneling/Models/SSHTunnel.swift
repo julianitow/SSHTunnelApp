@@ -15,25 +15,27 @@ class SSHTunnel: Equatable, ObservableObject, Hashable {
     public var cmd: String?
     public let fileManager = FileManager.default
         
-    init(config: SSHTunnelConfig) {
+    init(config: SSHTunnelConfig, nioSSH: Bool = false) {
         self.id = UUID()
         self.config = config
-        if config.usePassword {
-            if config.password.contains("$"){
-                self.config.password = config.password.replacingOccurrences(of: "$", with: "\\\\$")
-            }
-            var scriptPath = Bundle.main.bundlePath
-            scriptPath.append("/Contents/Resources/expect_ssh_password_authent.sh")
-            if !fileManager.isExecutableFile(atPath: scriptPath) {
-                do {
-                    try fileManager.setAttributes([.posixPermissions: NSNumber(value: 0o755)], ofItemAtPath: scriptPath)
-                } catch {
-                    print("While chmod script : \(error)")
+        if (!nioSSH) {
+            if config.usePassword {
+                if config.password.contains("$"){
+                    self.config.password = config.password.replacingOccurrences(of: "$", with: "\\\\$")
                 }
+                var scriptPath = Bundle.main.bundlePath
+                scriptPath.append("/Contents/Resources/expect_ssh_password_authent.sh")
+                if !fileManager.isExecutableFile(atPath: scriptPath) {
+                    do {
+                        try fileManager.setAttributes([.posixPermissions: NSNumber(value: 0o755)], ofItemAtPath: scriptPath)
+                    } catch {
+                        print("While chmod script : \(error)")
+                    }
+                }
+                self.cmd = "\(scriptPath) \(self.config.username) \(self.config.serverIP) \(self.config.distantPort) \(self.config.localPort) \(self.config.password)"
+            } else {
+                self.cmd = "ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort)"
             }
-            self.cmd = "\(scriptPath) \(self.config.username) \(self.config.serverIP) \(self.config.distantPort) \(self.config.localPort) \(self.config.password)"
-        } else {
-            self.cmd = "ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 \(self.config.username)@\(self.config.serverIP) -N -L \(self.config.toIP):\(self.config.localPort):127.0.0.1:\(self.config.distantPort)"
         }
         self.taskId = ShellService.createShellTask(self.cmd!)
     }
@@ -50,6 +52,9 @@ class SSHTunnel: Equatable, ObservableObject, Hashable {
         if self.config.usePassword {
             if (self.config.password.contains("$") && !self.config.password.contains("\\$")){
                 self.config.password = config.password.replacingOccurrences(of: "$", with: "\\\\$")
+            }
+            if (self.config.password.contains("'") && !self.config.password.contains("\'")){
+                self.config.password = config.password.replacingOccurrences(of: "'", with: "\'")
             }
             print(self.config.password)
             var scriptPath = Bundle.main.bundlePath
