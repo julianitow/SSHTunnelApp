@@ -8,7 +8,7 @@ on:
 
 env:
   ARTIFACT_NAME: SSHTunneling.app.zip
-  BUMP_VERSION_SCHEME: minor
+  BUMP_VERSION_SCHEME: patch
 
 jobs:
   build:
