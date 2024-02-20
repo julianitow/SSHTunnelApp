@@ -9,6 +9,7 @@ import Dispatch
 import NIOCore
 import NIOPosix
 import NIOSSH
+import Foundation
 
 final class ErrorHandler: ChannelInboundHandler {
     typealias InboundIn = Any
@@ -89,6 +90,9 @@ class NIOSSHClient {
         do {
             channel = try self.bootstrap!.connect(host: self.targetHost!, port: self.targetSSHPort ?? 22).wait()
             self.isConnected = true
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: Notification.Name.connectionNotification, object: self)
+            }
         } catch {
             print(error)
             return false

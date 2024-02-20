@@ -75,6 +75,9 @@ struct AppMenu: View {
                 print("DUPLCATE ACTION")
             }
         })
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name.connectionNotification), perform: { data in
+            viewModel.objectWillChange.send()
+        })
     }
     
 }

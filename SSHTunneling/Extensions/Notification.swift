@@ -30,3 +30,7 @@ extension Notification.Name {
 extension Notification.Name {
     static let connectionErrorNotification = Notification.Name("connectionErrorNotification")
 }
+
+extension Notification.Name {
+    static let connectionNotification = Notification.Name("connectionNoticiation")
+}
