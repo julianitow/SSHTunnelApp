@@ -24,6 +24,7 @@
 		EF53FA012ABCD1440028352E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF53FA002ABCD1440028352E /* Preview Assets.xcassets */; };
 		EF53FA0B2ABCD2100028352E /* ShellService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF53FA0A2ABCD2100028352E /* ShellService.swift */; };
 		EF6FEA902B85623400047597 /* NIOSSH in Frameworks */ = {isa = PBXBuildFile; productRef = EF6FEA8F2B85623400047597 /* NIOSSH */; };
+		EF6FEA922B87999600047597 /* SSHTunnelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6FEA912B87999600047597 /* SSHTunnelState.swift */; };
 		EF7ED6272AC0587600A1FBAB /* SSHTunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7ED6262AC0587600A1FBAB /* SSHTunnel.swift */; };
 		EF921F952B34FCCB00AD33CE /* LocalNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF921F942B34FCCB00AD33CE /* LocalNotificationService.swift */; };
 		EFACDF412ACDA24A0056AEF6 /* expect_ssh_password_authent.sh in Resources */ = {isa = PBXBuildFile; fileRef = EFACDF3D2ACD9F980056AEF6 /* expect_ssh_password_authent.sh */; };
@@ -52,6 +53,7 @@
 		EF53FA002ABCD1440028352E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		EF53FA022ABCD1440028352E /* SSHTunneling.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SSHTunneling.entitlements; sourceTree = "<group>"; };
 		EF53FA0A2ABCD2100028352E /* ShellService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellService.swift; sourceTree = "<group>"; };
+		EF6FEA912B87999600047597 /* SSHTunnelState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTunnelState.swift; sourceTree = "<group>"; };
 		EF7ED6262AC0587600A1FBAB /* SSHTunnel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTunnel.swift; sourceTree = "<group>"; };
 		EF7ED62A2AC0651300A1FBAB /* SSHTunneling.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SSHTunneling.entitlements; sourceTree = "<group>"; };
 		EF921F942B34FCCB00AD33CE /* LocalNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationService.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				EFC17C9F2AC495220072A58F /* SSHTunnelError.swift */,
+				EF6FEA912B87999600047597 /* SSHTunnelState.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 				EF06F7142B84EA8600153911 /* PortForwardingService.swift in Sources */,
 				EF06F7172B84EB2200153911 /* NIOSSHClient.swift in Sources */,
 				EF7ED6272AC0587600A1FBAB /* SSHTunnel.swift in Sources */,
+				EF6FEA922B87999600047597 /* SSHTunnelState.swift in Sources */,
 				EF4858862AC5767A0046BFB8 /* SSHTunnelsViewModel.swift in Sources */,
 				EFC17CA32AC495400072A58F /* SSHTunnelErrorExtension.swift in Sources */,
 				EF48588D2AC5D13E0046BFB8 /* Notification.swift in Sources */,

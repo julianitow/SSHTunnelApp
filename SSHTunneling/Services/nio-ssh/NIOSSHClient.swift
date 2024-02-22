@@ -91,10 +91,6 @@ class NIOSSHClient {
         do {
             channel = try self.bootstrap!.connect(host: self.targetHost!, port: self.targetSSHPort ?? 22).wait()
             self.isConnected = true
-            channel.pipeline.handler(type: NIOSSHHandler.self).whenFailure({ err in print("FAILURE ERR", err)})
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: Notification.Name.connectionNotification, object: self)
-            }
         } catch {
             print("Channel ERROR:", error)
             return false
@@ -108,11 +104,14 @@ class NIOSSHClient {
                     targetHost: self.targetHost!,
                     targetPort: self.targetPort!,
                     originatorAddress: inboundChannel.remoteAddress!)
-                
                 sshHandler.createChannel(promise,
                                          channelType: .directTCPIP(directTCPIP)) { childChannel, channelType in
                     guard case .directTCPIP = channelType else {
                         return channel.eventLoop.makeFailedFuture(SSHClientError.invalidChannelType)
+                    }
+                    
+                    DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: Notification.Name.connectionNotification, object: self.id)
                     }
                     
                     let (ours, theirs) = GlueHandler.matchedPair()

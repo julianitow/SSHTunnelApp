@@ -18,7 +18,7 @@ struct SSHTunnelDetailsView: View {
         VStack {
             Text(tunnel.config.name)
             VStack {
-                Text("Status - \(tunnel.isConnected ? "Connected" : "Disconnected")")
+                Text("Status - \(tunnel.state.rawValue)")
             }
             Form {
                 Section {

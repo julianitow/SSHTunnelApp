@@ -14,6 +14,7 @@ class SSHTunnel: Equatable, ObservableObject, Hashable {
     public var config: SSHTunnelConfig
     public var cmd: String?
     public let fileManager = FileManager.default
+    public var state: SSHTunnelState = .disconnected
     private var SSHClient: NIOSSHClient?
     private let queue = DispatchQueue(label: "bg", qos: .background)
         
@@ -86,6 +87,7 @@ class SSHTunnel: Equatable, ObservableObject, Hashable {
     }
     
     func connect() -> Bool {
+        self.state = .connecting
         let useNio = self.config.useNio ?? false
         if (!useNio) { return self._legacy_connect() }
         return nioConnect()
@@ -111,6 +113,7 @@ class SSHTunnel: Equatable, ObservableObject, Hashable {
             }*/
             self.setCommand()
             try ShellService.runTask(taskId, linkOutput, input: password)
+            NotificationCenter.default.post(name: Notification.Name.connectionNotification, object: self.id)
         } catch {
             print("SSHTunnel::connect::error => \(error)")
             self.setCommand()

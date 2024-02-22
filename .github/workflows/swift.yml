@@ -8,8 +8,8 @@ on:
 
 env:
   ARTIFACT_NAME: SSHTunneling.app.zip
-  BUMP_VERSION_SCHEME: minor
-  MAX_COMMITS_NUMBER: 10
+  BUMP_VERSION_SCHEME: patch
+  MAX_COMMITS_NUMBER: 3
 
 jobs:
   build:
@@ -26,6 +26,11 @@ jobs:
         with: 
           p12-file-base64: ${{ secrets.CERTIFICATE_P12 }}
           p12-password: ${{ secrets.PASSWORD_CERT }}
+      - name: Resolve Dependencies
+        id: resolution
+        uses: GetSidetrack/action-xcodeproj-spm-update@main
+        with:
+          failWhenOutdated: false
       - name: Build application
         uses: mxcl/xcodebuild@v2
         with:
