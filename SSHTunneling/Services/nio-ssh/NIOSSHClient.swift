@@ -33,6 +33,7 @@ class NIOSSHClient {
     //var channel: Channel?
     var server: PortForwardingServer?
     var isConnected: Bool = false
+    var authenticationRequest: NIOSSHUserAuthenticationOffer?
     
     var host: Substring?
     var port: Int?
@@ -58,6 +59,7 @@ class NIOSSHClient {
         self.targetPort = config.distantPort
         self.username = config.username
         self.password = config.password
+        self .authenticationRequest = NIOSSHUserAuthenticationOffer(username: self.username!, serviceName: "", offer: .password(.init(password: self.password!)))
     }
     
     func listen() -> Bool {
@@ -90,7 +92,7 @@ class NIOSSHClient {
                 NotificationCenter.default.post(name: Notification.Name.connectionNotification, object: self)
             }
         } catch {
-            print(error)
+            print("Channel ERROR:", error)
             return false
         }
         self.server = PortForwardingServer(group: self.group!,
@@ -145,7 +147,6 @@ extension NIOSSHClient: NIOSSHClientUserAuthenticationDelegate, NIOSSHClientServ
     
     func nextAuthenticationType(availableMethods: NIOSSH.NIOSSHAvailableUserAuthenticationMethods, nextChallengePromise: NIOCore.EventLoopPromise<NIOSSH.NIOSSHUserAuthenticationOffer?>) {
         print("nextAuthenticationType")
-        print(availableMethods)
         
         guard availableMethods.contains(.password) else {
             print("Error: password auth not supported")
@@ -159,9 +160,10 @@ extension NIOSSHClient: NIOSSHClientUserAuthenticationDelegate, NIOSSHClientServ
             return nextChallengePromise.fail(SSHClientError.badCredentials)
         }
         
-        //self.debugConfig()
+        print(self.authenticationRequest.debugDescription)
         
-        nextChallengePromise.succeed(NIOSSHUserAuthenticationOffer(username: self.username!, serviceName: "", offer: .password(.init(password: self.password!))))
+        //self.debugConfig()
+        nextChallengePromise.succeed(self.authenticationRequest)
     }
     
     func validateHostKey(hostKey: NIOSSH.NIOSSHPublicKey, validationCompletePromise: NIOCore.EventLoopPromise<Void>) {

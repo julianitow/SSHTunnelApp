@@ -74,14 +74,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		EF06F7152B84EA8F00153911 /* PortForwarding */ = {
+		EF06F7152B84EA8F00153911 /* nio-ssh */ = {
 			isa = PBXGroup;
 			children = (
 				EF06F7132B84EA8600153911 /* PortForwardingService.swift */,
 				EF06F7162B84EB2200153911 /* NIOSSHClient.swift */,
 				EF06F7182B84F22500153911 /* GlueHandler.swift */,
 			);
-			path = PortForwarding;
+			path = "nio-ssh";
 			sourceTree = "<group>";
 		};
 		EF4858842AC5766C0046BFB8 /* Models */ = {
@@ -159,7 +159,7 @@
 		EF53FA082ABCD1D30028352E /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				EF06F7152B84EA8F00153911 /* PortForwarding */,
+				EF06F7152B84EA8F00153911 /* nio-ssh */,
 				EF921F932B34FCB600AD33CE /* notification */,
 				EF4DC9BF2AE2A13B003CC9A6 /* version */,
 				EF4858892AC585AB0046BFB8 /* storage */,
