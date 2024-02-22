@@ -76,6 +76,9 @@ struct AppMenu: View {
             }
         })
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.connectionNotification), perform: { data in
+            let id = data.object as? UUID
+            guard let index = viewModel.tunnels.firstIndex(where: { $0.taskId == id }) else { return }
+            viewModel.tunnels[index].state = .connected
             viewModel.objectWillChange.send()
         })
         .onReceive(NotificationCenter.default.publisher(for: .endConnectionNotification), perform: { data in
@@ -86,6 +89,7 @@ struct AppMenu: View {
         .onReceive(NotificationCenter.default.publisher(for: .connectionErrorNotification), perform: { data in
             let id = data.object as? UUID
             guard let index = viewModel.tunnels.firstIndex(where: { $0.taskId == id }) else { return }
+            viewModel.tunnels[index].state = .disconnected
             if ((viewModel.tunnels[index].config.useNio ?? false)) { viewModel.tunnels[index].disconnect() }
             NotificationService.emitNotification(id: id, title: "\(viewModel.tunnels[index].config.name): connection closed", body: NotificationService.exitCodeToBody(code: 999))
         })
