@@ -57,6 +57,7 @@ extension GlueHandler {
     }
 
     private func partnerCloseFull() {
+        print("PARTNER WRITE EOF")
         self.context?.close(promise: nil)
     }
 
