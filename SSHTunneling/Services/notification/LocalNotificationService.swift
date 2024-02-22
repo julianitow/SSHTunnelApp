@@ -18,7 +18,7 @@ class NotificationService {
         case 0:
             return "Connection closed normally"
         case 999:
-            return "Connection closed due to a problem"
+            return "Connection failed"
         default:
             return "Connection refused"
         }
