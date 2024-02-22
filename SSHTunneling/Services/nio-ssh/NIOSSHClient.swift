@@ -34,6 +34,8 @@ class NIOSSHClient {
     var server: PortForwardingServer?
     var isConnected: Bool = false
     var authenticationRequest: NIOSSHUserAuthenticationOffer?
+    var authenticationRequestCount = 0
+    var authenticationFailed: Bool = false
     
     var host: Substring?
     var port: Int?
@@ -84,10 +86,12 @@ class NIOSSHClient {
             }
             .channelOption(ChannelOptions.socket(SocketOptionLevel(SOL_SOCKET), SO_REUSEADDR), value: 1)
             .channelOption(ChannelOptions.socket(SocketOptionLevel(IPPROTO_TCP), TCP_NODELAY), value: 1)
+            .channelOption(ChannelOptions.connectTimeout, value: .seconds(10))
         let channel: Channel
         do {
             channel = try self.bootstrap!.connect(host: self.targetHost!, port: self.targetSSHPort ?? 22).wait()
             self.isConnected = true
+            channel.pipeline.handler(type: NIOSSHHandler.self).whenFailure({ err in print("FAILURE ERR", err)})
             DispatchQueue.main.async {
                 NotificationCenter.default.post(name: Notification.Name.connectionNotification, object: self)
             }
@@ -104,7 +108,6 @@ class NIOSSHClient {
                     targetHost: self.targetHost!,
                     targetPort: self.targetPort!,
                     originatorAddress: inboundChannel.remoteAddress!)
-                print(directTCPIP)
                 
                 sshHandler.createChannel(promise,
                                          channelType: .directTCPIP(directTCPIP)) { childChannel, channelType in
@@ -136,7 +139,7 @@ class NIOSSHClient {
         _ = self.server?.close()
         self.shutdown()
         self.isConnected = false
-        NotificationCenter.default.post(name: Notification.Name.endConnectionNotification, object: self.id)
+        if (!self.authenticationFailed) { NotificationCenter.default.post(name: Notification.Name.endConnectionNotification, object: self.id) }
     }
 }
 
@@ -147,6 +150,7 @@ extension NIOSSHClient: NIOSSHClientUserAuthenticationDelegate, NIOSSHClientServ
     
     func nextAuthenticationType(availableMethods: NIOSSH.NIOSSHAvailableUserAuthenticationMethods, nextChallengePromise: NIOCore.EventLoopPromise<NIOSSH.NIOSSHUserAuthenticationOffer?>) {
         print("nextAuthenticationType")
+        self.authenticationRequestCount += 1
         
         guard availableMethods.contains(.password) else {
             print("Error: password auth not supported")
@@ -160,8 +164,12 @@ extension NIOSSHClient: NIOSSHClientUserAuthenticationDelegate, NIOSSHClientServ
             return nextChallengePromise.fail(SSHClientError.badCredentials)
         }
         
-        print(self.authenticationRequest.debugDescription)
-        
+        if (self.authenticationRequestCount >= 6) {
+            self.authenticationRequestCount = 0
+            self.authenticationFailed = true
+            return nextChallengePromise.fail(SSHClientError.authenticationFailed)
+        }
+                
         //self.debugConfig()
         nextChallengePromise.succeed(self.authenticationRequest)
     }
