@@ -124,6 +124,7 @@ class SSHTunnel: Equatable, ObservableObject, Hashable {
     }
     
     func disconnect() -> Void {
+        self.state = .disconnected
         let useNio = self.config.useNio ?? false
         if (!useNio) { return self._legacy_disconnect() }
         return nioDisconnect()
