@@ -20,6 +20,8 @@ struct SSHTunnelDetailsView: View {
             Text(tunnel.config.name)
             VStack {
                 Text("Status - \(tunnel.state.rawValue)\(tunnel.state == .connecting ? loadingDots : "")")
+                    .animation(.default)
+                    .transition(AnyTransition.scale(scale: 1.5).combined(with: .opacity))
             }
             Form {
                 Section {

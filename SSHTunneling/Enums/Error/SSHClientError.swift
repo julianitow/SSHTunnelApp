@@ -1,16 +1,11 @@
 //
-//  SSHTunnelError.swift
+//  SSHClientError.swift
 //  SSHTunneling
 //
-//  Created by Julien Guillan on 27/09/2023.
+//  Created by Julien Guillan on 26/02/2024.
 //
 
 import Foundation
-
-enum SSHTunnelError: Error {
-    case ErrorResumingTask
-    case unexpected(code: Int)
-}
 
 enum SSHClientError: Error {
     case passwordAuthenticationNotSupported
