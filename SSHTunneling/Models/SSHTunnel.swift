@@ -94,6 +94,9 @@ class SSHTunnel: Equatable, ObservableObject, Hashable {
     }
     
     func nioConnect() -> Bool {
+        if (self.SSHClient == nil) {
+            self.SSHClient = NIOSSHClient(id: self.id)
+        }
         self.SSHClient?.setConfig(config: self.config)
         self.queue.async {
             _ = self.SSHClient!.listen()
