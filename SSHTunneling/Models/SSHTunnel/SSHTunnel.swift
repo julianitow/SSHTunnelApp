@@ -117,10 +117,12 @@ class SSHTunnel: Equatable, ObservableObject, Hashable {
             self.setCommand()
             try ShellService.runTask(taskId, linkOutput, input: password)
             NotificationCenter.default.post(name: Notification.Name.connectionNotification, object: self.id)
+            self.state = .connected
         } catch {
             print("SSHTunnel::connect::error => \(error)")
             self.setCommand()
             NotificationCenter.default.post(name: Notification.Name.connectionErrorNotification, object: self.id)
+            self.state = .disconnected
             return false
         }
         return true
