@@ -13,12 +13,15 @@ struct SSHTunnelDetailsView: View {
     @Binding var updated: Bool
     @State var passwordAuthentication: Bool = false
     @State var useNio: Bool = false
+    @State var loadingDots = "..."
         
     var body: some View {
         VStack {
             Text(tunnel.config.name)
             VStack {
-                Text("Status - \(tunnel.state.rawValue)")
+                Text("Status - \(tunnel.state.rawValue)\(tunnel.state == .connecting ? loadingDots : "")")
+                    .animation(.default)
+                    .transition(AnyTransition.scale(scale: 1.5).combined(with: .opacity))
             }
             Form {
                 Section {

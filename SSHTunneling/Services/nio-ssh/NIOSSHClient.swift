@@ -93,6 +93,9 @@ class NIOSSHClient {
             self.isConnected = true
         } catch {
             print("Channel ERROR:", error)
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: Notification.Name.connectionErrorNotification, object: self.id)
+            }
             return false
         }
         self.server = PortForwardingServer(group: self.group!,
@@ -139,6 +142,7 @@ class NIOSSHClient {
         self.shutdown()
         self.isConnected = false
         if (!self.authenticationFailed) { NotificationCenter.default.post(name: Notification.Name.endConnectionNotification, object: self.id) }
+        self.authenticationFailed = false
     }
 }
 

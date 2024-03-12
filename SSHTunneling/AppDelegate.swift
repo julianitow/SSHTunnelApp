@@ -23,6 +23,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             window.close()
             self.window = window
         }
+        NotificationService.center.requestAuthorization {(granted, err) in
+            NotificationService.authorized = granted
+        }
     }
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {

@@ -18,6 +18,7 @@
 		EF48588D2AC5D13E0046BFB8 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48588C2AC5D13E0046BFB8 /* Notification.swift */; };
 		EF4DC9BD2AE1CFCE003CC9A6 /* SecureInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4DC9BC2AE1CFCE003CC9A6 /* SecureInputView.swift */; };
 		EF4DC9C12AE2A14B003CC9A6 /* VersionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4DC9C02AE2A14B003CC9A6 /* VersionService.swift */; };
+		EF4E31202B8CA6D7002BDC22 /* SSHClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4E311F2B8CA6D7002BDC22 /* SSHClientError.swift */; };
 		EF53F9FA2ABCD1430028352E /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF53F9F92ABCD1430028352E /* App.swift */; };
 		EF53F9FC2ABCD1430028352E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF53F9FB2ABCD1430028352E /* ContentView.swift */; };
 		EF53F9FE2ABCD1440028352E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF53F9FD2ABCD1440028352E /* Assets.xcassets */; };
@@ -46,6 +47,7 @@
 		EF4DC9BC2AE1CFCE003CC9A6 /* SecureInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInputView.swift; sourceTree = "<group>"; };
 		EF4DC9BE2AE1DE9B003CC9A6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		EF4DC9C02AE2A14B003CC9A6 /* VersionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionService.swift; sourceTree = "<group>"; };
+		EF4E311F2B8CA6D7002BDC22 /* SSHClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHClientError.swift; sourceTree = "<group>"; };
 		EF53F9F62ABCD1430028352E /* SSHTunneling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SSHTunneling.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF53F9F92ABCD1430028352E /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		EF53F9FB2ABCD1430028352E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -89,9 +91,8 @@
 		EF4858842AC5766C0046BFB8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				EF4858852AC5767A0046BFB8 /* SSHTunnelsViewModel.swift */,
-				EF4858872AC582980046BFB8 /* SSHTunnelConfig.swift */,
-				EF7ED6262AC0587600A1FBAB /* SSHTunnel.swift */,
+				EF4E311C2B8CA693002BDC22 /* SSHTunnel */,
+				EF4E311B2B8CA682002BDC22 /* ViewModels */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -110,6 +111,65 @@
 				EF4DC9C02AE2A14B003CC9A6 /* VersionService.swift */,
 			);
 			path = version;
+			sourceTree = "<group>";
+		};
+		EF4E31172B8CA610002BDC22 /* AppMenu */ = {
+			isa = PBXGroup;
+			children = (
+				EFC17CA62AC49CAF0072A58F /* AppMenu.swift */,
+			);
+			path = AppMenu;
+			sourceTree = "<group>";
+		};
+		EF4E31182B8CA61D002BDC22 /* TunnelView */ = {
+			isa = PBXGroup;
+			children = (
+				EF4858822AC5760D0046BFB8 /* SSHTunnelDetailsView.swift */,
+				EF4DC9BC2AE1CFCE003CC9A6 /* SecureInputView.swift */,
+			);
+			path = TunnelView;
+			sourceTree = "<group>";
+		};
+		EF4E31192B8CA63D002BDC22 /* ContentView */ = {
+			isa = PBXGroup;
+			children = (
+				EF53F9FB2ABCD1430028352E /* ContentView.swift */,
+			);
+			path = ContentView;
+			sourceTree = "<group>";
+		};
+		EF4E311B2B8CA682002BDC22 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				EF4858852AC5767A0046BFB8 /* SSHTunnelsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		EF4E311C2B8CA693002BDC22 /* SSHTunnel */ = {
+			isa = PBXGroup;
+			children = (
+				EF4858872AC582980046BFB8 /* SSHTunnelConfig.swift */,
+				EF7ED6262AC0587600A1FBAB /* SSHTunnel.swift */,
+			);
+			path = SSHTunnel;
+			sourceTree = "<group>";
+		};
+		EF4E311D2B8CA6AF002BDC22 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				EFC17C9F2AC495220072A58F /* SSHTunnelError.swift */,
+				EF4E311F2B8CA6D7002BDC22 /* SSHClientError.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		EF4E311E2B8CA6BA002BDC22 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				EF6FEA912B87999600047597 /* SSHTunnelState.swift */,
+			);
+			path = State;
 			sourceTree = "<group>";
 		};
 		EF53F9ED2ABCD1430028352E = {
@@ -196,8 +256,8 @@
 		EFC17C9E2AC495120072A58F /* Enums */ = {
 			isa = PBXGroup;
 			children = (
-				EFC17C9F2AC495220072A58F /* SSHTunnelError.swift */,
-				EF6FEA912B87999600047597 /* SSHTunnelState.swift */,
+				EF4E311E2B8CA6BA002BDC22 /* State */,
+				EF4E311D2B8CA6AF002BDC22 /* Error */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -214,10 +274,9 @@
 		EFC17CA52AC495A80072A58F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				EF53F9FB2ABCD1430028352E /* ContentView.swift */,
-				EFC17CA62AC49CAF0072A58F /* AppMenu.swift */,
-				EF4858822AC5760D0046BFB8 /* SSHTunnelDetailsView.swift */,
-				EF4DC9BC2AE1CFCE003CC9A6 /* SecureInputView.swift */,
+				EF4E31192B8CA63D002BDC22 /* ContentView */,
+				EF4E31182B8CA61D002BDC22 /* TunnelView */,
+				EF4E31172B8CA610002BDC22 /* AppMenu */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -316,6 +375,7 @@
 				EF48588D2AC5D13E0046BFB8 /* Notification.swift in Sources */,
 				EFC17CA02AC495220072A58F /* SSHTunnelError.swift in Sources */,
 				EF4858832AC5760D0046BFB8 /* SSHTunnelDetailsView.swift in Sources */,
+				EF4E31202B8CA6D7002BDC22 /* SSHClientError.swift in Sources */,
 				EF4DC9BD2AE1CFCE003CC9A6 /* SecureInputView.swift in Sources */,
 				EF921F952B34FCCB00AD33CE /* LocalNotificationService.swift in Sources */,
 				EF2E791B2AC2D8E90084B2DA /* AppDelegate.swift in Sources */,

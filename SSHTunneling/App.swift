@@ -26,7 +26,6 @@ struct SSHTunnelingApp: App {
     init() {
         self.contentView = ContentView()
         self.appMenu = AppMenu()
-        NotificationService.requestAuthorization()
     }
 
     var body: some Scene {
@@ -57,7 +56,7 @@ struct SSHTunnelingApp: App {
                 Divider()
                 //Button("NIO TEST") {
                 //    let sshClient = NIOSSHClient()
-                //    let config: SSHTunnelConfig = SSHTunnelConfig(name: "TEST", username: "***REMOVED***", serverIP: "***REMOVED***", to: "127.0.0.1", localPort: 27018, //distantPort: 27017)
+                //    let config: SSHTunnelConfig = SSHTunnelConfig(name: "TEST", username: "medissimo", serverIP: "10.29.132.8", to: "127.0.0.1", localPort: 27018, //distantPort: 27017)
                 //    sshClient.setConfig(config: config)
                 //    let queue = DispatchQueue(label: "bg", qos: .background)
                 //    queue.async {
